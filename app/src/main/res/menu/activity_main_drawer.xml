@@ -28,5 +28,8 @@
     <item
         android:id="@+id/favorites_menu_selection"
         android:title="@string/fevorites_menu_title" />
+    <item
+        android:id="@+id/logout_menu_selection"
+        android:title="@string/logout" />
 
 </menu>

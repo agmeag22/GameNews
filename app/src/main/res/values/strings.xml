@@ -14,5 +14,19 @@
     <string name="settings_menu_title">Settings</string>
     <string name="fevorites_menu_title">Favorites</string>
     <string name="search">search</string>
+    <string name="get_started">Just a few details to get you started</string>
+    <string name="get_startedword">Get Started</string>
+
+    <string name="sign_in_text"><u>sign in</u></string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="sign_in_comment">Just a few details before you get logged</string>
+    <string name="sign_in_hithere">Hi there, ready to log in?</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="register"><u>register</u></string>
+    <string name="logout">Logout</string>
+    <string name="already_registered">Already registered?,</string>
+    <string name="sign_in">sign in</string>
+    <string name="not_registered_yet">Not registered yet?,</string>
 
 </resources>
