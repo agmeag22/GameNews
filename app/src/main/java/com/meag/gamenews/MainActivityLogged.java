@@ -9,12 +9,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+
+import com.meag.gamenews.LogIn.Register;
+import com.meag.gamenews.Menu.MenuModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +28,8 @@ public class MainActivityLogged extends AppCompatActivity
     ExpandableListView expandableListView;
     List<MenuModel> headerList = new ArrayList<>();
     HashMap<MenuModel, List<MenuModel>> childList = new HashMap<>();
-    String news_title,games_title, settings_title,favorites_title,logout_title;
+    String news_title, games_title, settings_title, favorites_title, logout_title;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,30 +89,11 @@ public class MainActivityLogged extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-//        Fragment fragment = new Fragment();
-//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-//        switch (id) {
-//            case R.id.menu_news_selection:
-//                break;
-//            case R.id.menu_lol_selection:
-//                break;
-//            case R.id.menu_dota_selection:
-//                break;
-//            case R.id.menu_csgo_selection:
-//                break;
-//            case R.id.settings_menu_selection:
-//                break;
-//            case R.id.favorites_menu_selection:
-//                break;
-//            case R.id.logout_menu_selection:
-//                fragment = new Register();
-//                transaction.replace(R.id.drawer_layout, fragment).commit();
-//                break;
-//        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     private void prepareMenuData() {
         get_menu_titles();
         MenuModel menuModel = new MenuModel(news_title, false, true); //Menu of Java Tutorials
@@ -118,14 +102,14 @@ public class MainActivityLogged extends AppCompatActivity
             childList.put(menuModel, null);
         }
         //Example of Expandable list
-        menuModel = new MenuModel(games_title+"", true, true); //Menu of Java Tutorials
+        menuModel = new MenuModel(games_title, true, true); //Menu of Java Tutorials
         headerList.add(menuModel);
         List<MenuModel> childModelsList = new ArrayList<>();
-        MenuModel childModel = new MenuModel("@string/lol_menu_title", false, false);
+        MenuModel childModel = new MenuModel(getResources().getString(R.string.lol_menu_title), false, false);
         childModelsList.add(childModel);
-        childModel = new MenuModel("@string/csgo_menu_title", false, false);
+        childModel = new MenuModel(getResources().getString(R.string.dota_menu_title), false, false);
         childModelsList.add(childModel);
-        childModel = new MenuModel("@string/dota_menu_title", false, false);
+        childModel = new MenuModel(getResources().getString(R.string.csgo_menu_title), false, false);
         childModelsList.add(childModel);
 
         if (menuModel.hasChildren) {
@@ -150,7 +134,7 @@ public class MainActivityLogged extends AppCompatActivity
 
     private void populateExpandableList() {
 
-        expandableListAdapter = new com.meag.gamenews.ExpandableListAdapter(this, headerList, childList);
+        expandableListAdapter = new com.meag.gamenews.Adapters.ExpandableListAdapter(this, headerList, childList);
         expandableListView.setAdapter(expandableListAdapter);
 
         expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
@@ -161,25 +145,26 @@ public class MainActivityLogged extends AppCompatActivity
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 if (headerList.get(groupPosition).isGroup) {
                     if (!headerList.get(groupPosition).hasChildren) {
-                        if(headerList.get(groupPosition).menuName.equals(news_title)){
-
+                        if (headerList.get(groupPosition).menuName.equals(news_title)) {
+                            fragment = new News();
+                            transaction.replace(R.id.content, fragment).commit();
                         }
-                        if(headerList.get(groupPosition).menuName.equals(games_title)){
 
+                        if (headerList.get(groupPosition).menuName.equals(settings_title)) {
+//                            fragment = new Settings();
+//                            transaction.replace(R.id.content, fragment).commit();
                         }
-                        if(headerList.get(groupPosition).menuName.equals(settings_title)){
-
+                        if (headerList.get(groupPosition).menuName.equals(favorites_title)) {
+//                            fragment = new Favorites();
+//                            transaction.replace(R.id.content, fragment).commit();
                         }
-                        if(headerList.get(groupPosition).menuName.equals(favorites_title)){
-
-                        }
-                        if(headerList.get(groupPosition).menuName.equals(logout_title)){
+                        if (headerList.get(groupPosition).menuName.equals(logout_title)) {
                             fragment = new Register();
                             transaction.replace(R.id.drawer_layout, fragment).commit();
                         }
 
 
-                            onBackPressed();
+                        onBackPressed();
                     }
                 }
                 return false;
@@ -189,20 +174,30 @@ public class MainActivityLogged extends AppCompatActivity
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-
+                Fragment fragment = new Fragment();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 if (childList.get(headerList.get(groupPosition)) != null) {
                     MenuModel model = childList.get(headerList.get(groupPosition)).get(childPosition);
+                    if (childList.get(headerList.get(groupPosition)).get(childPosition).menuName.equals(getResources().getString(R.string.lol_menu_title)) ||
+                            childList.get(headerList.get(groupPosition)).get(childPosition).menuName.equals(getResources().getString(R.string.dota_menu_title)) ||
+                            childList.get(headerList.get(groupPosition)).get(childPosition).menuName.equals(getResources().getString(R.string.csgo_menu_title))) {
+                        fragment = new Game();
+                        transaction.replace(R.id.content, fragment).commit();
+
+                    }
+                    onBackPressed();
                 }
                 return false;
             }
         });
     }
-    public void get_menu_titles(){
-        news_title=getResources().getString(R.string.news_title);
-        games_title=getResources().getString(R.string.games_menu_title);
-        settings_title=getResources().getString(R.string.settings_menu_title);
-        favorites_title=getResources().getString(R.string.favorites_menu_title);
-        logout_title=getResources().getString(R.string.logout);
+
+    public void get_menu_titles() {
+        news_title = getResources().getString(R.string.news_title);
+        games_title = getResources().getString(R.string.games_menu_title);
+        settings_title = getResources().getString(R.string.settings_menu_title);
+        favorites_title = getResources().getString(R.string.favorites_menu_title);
+        logout_title = getResources().getString(R.string.logout);
     }
 }
 

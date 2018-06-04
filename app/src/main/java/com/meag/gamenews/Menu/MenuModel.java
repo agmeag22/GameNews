@@ -1,4 +1,4 @@
-package com.meag.gamenews;
+package com.meag.gamenews.Menu;
 
 
 import android.text.Layout;

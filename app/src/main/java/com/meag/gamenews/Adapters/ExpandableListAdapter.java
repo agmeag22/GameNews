@@ -1,13 +1,15 @@
-package com.meag.gamenews;
+package com.meag.gamenews.Adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
+
+import com.meag.gamenews.Menu.MenuModel;
+import com.meag.gamenews.R;
 
 import java.util.HashMap;
 import java.util.List;

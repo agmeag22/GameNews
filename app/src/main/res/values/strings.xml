@@ -32,4 +32,7 @@
     <string name="tab_top_players">Top Players</string>
     <string name="tab_preview">Preview</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

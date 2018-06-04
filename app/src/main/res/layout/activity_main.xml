@@ -21,8 +21,7 @@
         android:background="@color/colorPrimaryDark"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
-        app:itemTextColor="@color/colorAccent"
-        >
+        app:itemTextColor="@color/colorAccent">
 
         <ExpandableListView
             android:id="@+id/expandableListView"
@@ -32,8 +31,6 @@
             android:background="@color/colorPrimaryDark"
             android:groupIndicator="@null" />
     </android.support.design.widget.NavigationView>
-
-
 
 
 </android.support.v4.widget.DrawerLayout>

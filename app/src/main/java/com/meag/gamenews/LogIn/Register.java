@@ -1,4 +1,4 @@
-package com.meag.gamenews;
+package com.meag.gamenews.LogIn;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.meag.gamenews.R;
 
 
 public class Register extends Fragment {

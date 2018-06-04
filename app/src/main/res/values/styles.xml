@@ -20,6 +20,7 @@
     <style name="text">
         <item name="android:textColor">#fff</item>
     </style>
+
     <style name="firsttextlog">
         <item name="android:textColor">#de000000</item>
         <item name="android:layout_marginBottom">5dp</item>
