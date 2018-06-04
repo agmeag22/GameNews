@@ -9,12 +9,24 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class MainActivityLogged extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    ExpandableListAdapter expandableListAdapter;
+    ExpandableListView expandableListView;
+    List<MenuModel> headerList = new ArrayList<>();
+    HashMap<MenuModel, List<MenuModel>> childList = new HashMap<>();
+    String news_title,games_title, settings_title,favorites_title,logout_title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,6 +34,9 @@ public class MainActivityLogged extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        expandableListView = findViewById(R.id.expandableListView);
+        prepareMenuData();
+        populateExpandableList();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -71,29 +86,123 @@ public class MainActivityLogged extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Fragment fragment = new Fragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        switch (id) {
-            case R.id.menu_news_selection:
-                break;
-            case R.id.menu_lol_selection:
-                break;
-            case R.id.menu_dota_selection:
-                break;
-            case R.id.menu_csgo_selection:
-                break;
-            case R.id.settings_menu_selection:
-                break;
-            case R.id.favorites_menu_selection:
-                break;
-            case R.id.logout_menu_selection:
-                fragment = new Register();
-                transaction.replace(R.id.drawer_layout, fragment).commit();
-                break;
-        }
+//        Fragment fragment = new Fragment();
+//        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//        switch (id) {
+//            case R.id.menu_news_selection:
+//                break;
+//            case R.id.menu_lol_selection:
+//                break;
+//            case R.id.menu_dota_selection:
+//                break;
+//            case R.id.menu_csgo_selection:
+//                break;
+//            case R.id.settings_menu_selection:
+//                break;
+//            case R.id.favorites_menu_selection:
+//                break;
+//            case R.id.logout_menu_selection:
+//                fragment = new Register();
+//                transaction.replace(R.id.drawer_layout, fragment).commit();
+//                break;
+//        }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    private void prepareMenuData() {
+        get_menu_titles();
+        MenuModel menuModel = new MenuModel(news_title, false, true); //Menu of Java Tutorials
+        headerList.add(menuModel);
+        if (!menuModel.hasChildren) {
+            childList.put(menuModel, null);
+        }
+        //Example of Expandable list
+        menuModel = new MenuModel(games_title+"", true, true); //Menu of Java Tutorials
+        headerList.add(menuModel);
+        List<MenuModel> childModelsList = new ArrayList<>();
+        MenuModel childModel = new MenuModel("@string/lol_menu_title", false, false);
+        childModelsList.add(childModel);
+        childModel = new MenuModel("@string/csgo_menu_title", false, false);
+        childModelsList.add(childModel);
+        childModel = new MenuModel("@string/dota_menu_title", false, false);
+        childModelsList.add(childModel);
 
+        if (menuModel.hasChildren) {
+            childList.put(menuModel, childModelsList);
+        }
+        menuModel = new MenuModel(settings_title, false, true); //Menu of Java Tutorials
+        headerList.add(menuModel);
+        if (!menuModel.hasChildren) {
+            childList.put(menuModel, null);
+        }
+        menuModel = new MenuModel(favorites_title, false, true); //Menu of Java Tutorials
+        headerList.add(menuModel);
+        if (!menuModel.hasChildren) {
+            childList.put(menuModel, null);
+        }
+        menuModel = new MenuModel(logout_title, false, true); //Menu of Java Tutorials
+        headerList.add(menuModel);
+        if (!menuModel.hasChildren) {
+            childList.put(menuModel, null);
+        }
+    }
+
+    private void populateExpandableList() {
+
+        expandableListAdapter = new com.meag.gamenews.ExpandableListAdapter(this, headerList, childList);
+        expandableListView.setAdapter(expandableListAdapter);
+
+        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+                get_menu_titles();
+                Fragment fragment = new Fragment();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                if (headerList.get(groupPosition).isGroup) {
+                    if (!headerList.get(groupPosition).hasChildren) {
+                        if(headerList.get(groupPosition).menuName.equals(news_title)){
+
+                        }
+                        if(headerList.get(groupPosition).menuName.equals(games_title)){
+
+                        }
+                        if(headerList.get(groupPosition).menuName.equals(settings_title)){
+
+                        }
+                        if(headerList.get(groupPosition).menuName.equals(favorites_title)){
+
+                        }
+                        if(headerList.get(groupPosition).menuName.equals(logout_title)){
+                            fragment = new Register();
+                            transaction.replace(R.id.drawer_layout, fragment).commit();
+                        }
+
+
+                            onBackPressed();
+                    }
+                }
+                return false;
+            }
+        });
+
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+
+                if (childList.get(headerList.get(groupPosition)) != null) {
+                    MenuModel model = childList.get(headerList.get(groupPosition)).get(childPosition);
+                }
+                return false;
+            }
+        });
+    }
+    public void get_menu_titles(){
+        news_title=getResources().getString(R.string.news_title);
+        games_title=getResources().getString(R.string.games_menu_title);
+        settings_title=getResources().getString(R.string.settings_menu_title);
+        favorites_title=getResources().getString(R.string.favorites_menu_title);
+        logout_title=getResources().getString(R.string.logout);
+    }
 }
+

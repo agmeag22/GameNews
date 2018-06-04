@@ -12,7 +12,7 @@
     <string name="dota_menu_title">Dota</string>
     <string name="csgo_menu_title">CS GO</string>
     <string name="settings_menu_title">Settings</string>
-    <string name="fevorites_menu_title">Favorites</string>
+    <string name="favorites_menu_title">Favorites</string>
     <string name="search">search</string>
     <string name="get_started">Just a few details to get you started</string>
     <string name="get_startedword">Get Started</string>

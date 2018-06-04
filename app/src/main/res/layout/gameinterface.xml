@@ -25,4 +25,5 @@
             android:layout_height="wrap_content"
             android:text="@string/tab_preview" />
     </android.support.design.widget.TabLayout>
+    <include layout="@layout/container"></include>
 </LinearLayout>
