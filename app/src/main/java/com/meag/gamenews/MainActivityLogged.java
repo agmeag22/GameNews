@@ -71,18 +71,24 @@ public class MainActivityLogged extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Fragment fragment=new Fragment();
-        FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
-        switch (id){
-            case R.id.menu_news_selection: break;
-            case R.id.menu_lol_selection: break;
-            case R.id.menu_dota_selection: break;
-            case R.id.menu_csgo_selection: break;
-            case R.id.settings_menu_selection: break;
-            case R.id.favorites_menu_selection: break;
+        Fragment fragment = new Fragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        switch (id) {
+            case R.id.menu_news_selection:
+                break;
+            case R.id.menu_lol_selection:
+                break;
+            case R.id.menu_dota_selection:
+                break;
+            case R.id.menu_csgo_selection:
+                break;
+            case R.id.settings_menu_selection:
+                break;
+            case R.id.favorites_menu_selection:
+                break;
             case R.id.logout_menu_selection:
-                fragment=new Register();
-                transaction.replace(R.id.drawer_layout,fragment).commit();
+                fragment = new Register();
+                transaction.replace(R.id.drawer_layout, fragment).commit();
                 break;
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

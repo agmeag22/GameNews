@@ -28,5 +28,8 @@
     <string name="already_registered">Already registered?,</string>
     <string name="sign_in">sign in</string>
     <string name="not_registered_yet">Not registered yet?,</string>
+    <string name="tab_news">News</string>
+    <string name="tab_top_players">Top Players</string>
+    <string name="tab_preview">Preview</string>
 
 </resources>

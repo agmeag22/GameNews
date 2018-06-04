@@ -14,6 +14,7 @@ import android.widget.TextView;
 public class Login extends Fragment {
     TextView register_access;
     Button sign_in_button;
+
     public Login() {
         // Required empty public constructor
     }
@@ -22,24 +23,24 @@ public class Login extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v=inflater.inflate(R.layout.login,container,false);
+        View v = inflater.inflate(R.layout.login, container, false);
         findviews(v);
         clicklisteners();
         return v;
     }
 
-    public void findviews(View v){
-        register_access=v.findViewById(R.id.register_access);
-        sign_in_button=v.findViewById(R.id.sign_in_button);
+    public void findviews(View v) {
+        register_access = v.findViewById(R.id.register_access);
+        sign_in_button = v.findViewById(R.id.sign_in_button);
     }
 
-    public void clicklisteners(){
+    public void clicklisteners() {
         register_access.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment=new Register();
-                FragmentTransaction transaction=getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.drawer_layout,fragment).commit();
+                Fragment fragment = new Register();
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.drawer_layout, fragment).commit();
             }
         });
         sign_in_button.setOnClickListener(new View.OnClickListener() {
