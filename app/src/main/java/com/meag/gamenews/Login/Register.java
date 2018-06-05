@@ -1,4 +1,4 @@
-package com.meag.gamenews.LogIn;
+package com.meag.gamenews.Login;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

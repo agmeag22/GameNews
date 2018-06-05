@@ -1,5 +1,6 @@
 package com.meag.gamenews;
 
+import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
@@ -15,7 +16,7 @@ import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
-import com.meag.gamenews.LogIn.Register;
+import com.meag.gamenews.Login.Register;
 import com.meag.gamenews.Menu.MenuModel;
 
 import java.util.ArrayList;
@@ -94,6 +95,7 @@ public class MainActivityLogged extends AppCompatActivity
         return true;
     }
 
+    //Function to add any menu option and submenu entries on a expandable list
     private void prepareMenuData() {
         get_menu_titles();
         MenuModel menuModel = new MenuModel(news_title, false, true); //Menu of Java Tutorials
@@ -101,7 +103,7 @@ public class MainActivityLogged extends AppCompatActivity
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
         }
-        //Example of Expandable list
+
         menuModel = new MenuModel(games_title, true, true); //Menu of Java Tutorials
         headerList.add(menuModel);
         List<MenuModel> childModelsList = new ArrayList<>();
@@ -132,11 +134,13 @@ public class MainActivityLogged extends AppCompatActivity
         }
     }
 
+    //Setting adapter for the expandable list and making the visuals appear, + adding what would happen when selected
     private void populateExpandableList() {
 
         expandableListAdapter = new com.meag.gamenews.Adapters.ExpandableListAdapter(this, headerList, childList);
         expandableListView.setAdapter(expandableListAdapter);
 
+        //Click listener for parent option
         expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
@@ -159,7 +163,9 @@ public class MainActivityLogged extends AppCompatActivity
 //                            transaction.replace(R.id.content, fragment).commit();
                         }
                         if (headerList.get(groupPosition).menuName.equals(logout_title)) {
-                            fragment = new Register();
+                            SharedPreferences sp = getSharedPreferences(getPackageName(), MODE_PRIVATE);
+                            sp.edit().putString("token", "").apply();
+                            fragment = new Start();
                             transaction.replace(R.id.drawer_layout, fragment).commit();
                         }
 
@@ -170,7 +176,7 @@ public class MainActivityLogged extends AppCompatActivity
                 return false;
             }
         });
-
+        //Click listener for any child option
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
@@ -192,6 +198,7 @@ public class MainActivityLogged extends AppCompatActivity
         });
     }
 
+    //Setting menu option titles
     public void get_menu_titles() {
         news_title = getResources().getString(R.string.news_title);
         games_title = getResources().getString(R.string.games_menu_title);
