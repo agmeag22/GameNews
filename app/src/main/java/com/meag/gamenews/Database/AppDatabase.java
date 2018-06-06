@@ -11,11 +11,11 @@ public abstract class AppDatabase extends RoomDatabase {
 
 
     //    public abstract FavoriteNewsDao favoriteNewsDao();
-    public abstract DAO_New newDao();
+    public abstract DAO_New newDAO();
 
-    public abstract DAO_Player playerDao();
+    public abstract DAO_Player playerDAO();
 
-    public abstract DAO_User userDao();
+    public abstract DAO_User userDAO();
 
     private static AppDatabase INSTANCE;
 

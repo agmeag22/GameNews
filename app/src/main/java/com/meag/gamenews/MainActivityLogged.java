@@ -145,7 +145,7 @@ public class MainActivityLogged extends AppCompatActivity
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
                 get_menu_titles();
-                Fragment fragment = new Fragment();
+                Fragment fragment;
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 if (headerList.get(groupPosition).isGroup) {
                     if (!headerList.get(groupPosition).hasChildren) {

@@ -25,7 +25,7 @@ public interface DAO_New {
     New getNewByID(String id);
 
     @Query("SELECT * from new ORDER BY created_date DESC")
-    LiveData<List<New>> getAllNews();
+    LiveData<List<New>> getNews();
 
     @Query("SELECT * FROM new WHERE favorite=1")
     LiveData<List<New>> getFavoritesNews();
