@@ -4,6 +4,7 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 
 import com.meag.gamenews.ForAPI.APIService;
+import com.meag.gamenews.ForAPI.API_Utils;
 
 import java.util.List;
 
@@ -43,5 +44,6 @@ public class Repository {
     public User getUsers() {
         return mdao_user.getUser();
     }
+
 
 }
