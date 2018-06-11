@@ -8,9 +8,9 @@ import android.support.annotation.NonNull;
 import java.io.Serializable;
 
 @Entity(tableName = "favorite")
-public class FavoriteNew implements Serializable {
+public class FavoriteNew {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @NonNull
     @ColumnInfo(name = "idnew")
     private String idnew;

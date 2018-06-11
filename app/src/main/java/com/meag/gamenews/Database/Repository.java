@@ -9,7 +9,9 @@ import com.meag.gamenews.ForAPI.APIService;
 import com.meag.gamenews.ForAPI.API_Utils;
 import com.meag.gamenews.ForAPI.FavoriteNew_API;
 import com.meag.gamenews.ForAPI.New_API;
+import com.meag.gamenews.ForAPI.Player_API;
 import com.meag.gamenews.ForAPI.User_API;
+import com.meag.gamenews.R;
 
 import java.io.IOException;
 import java.util.List;
@@ -57,15 +59,13 @@ public class Repository {
         return mdao_user.getUser();
     }
 
-    public boolean fillUserInfo(final String string) {
+    public boolean PopulateUserInfo(final String token) {
 
-        @SuppressLint("StaticFieldLeak") AsyncTask<String, Void, Boolean> task = new AsyncTask<String, Void, Boolean>() {
-            @Override
-            protected Boolean doInBackground(String... strings) {
                 try {
 
-                    User_API user_api = (User_API) apiservice.getUserDetails(strings[0]).execute().body();
+                    User_API user_api = (User_API) apiservice.getUserDetails(token).execute().body();
                     if (user_api != null) {
+                        mdao_user.deleteAll();
                         User user = new User(user_api.getId(), user_api.getUser(), "");
                         mdao_user.insert(user);
                     }
@@ -81,48 +81,50 @@ public class Repository {
                 }
                 return true;
             }
-        };
+
+
+    public int PopulateNews(final String token) {
+        List<New_API> list_new_api = null;
         try {
-            Boolean resultado = task.execute(string).get();
-            return resultado;
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public boolean UpdateNews(final String string) {
-
-        @SuppressLint("StaticFieldLeak") AsyncTask<String, Void, Boolean> task = new AsyncTask<String, Void, Boolean>() {
-            @Override
-            protected Boolean doInBackground(String... strings) {
-                try {
-
-                    New_API new_api = (New_API) apiservice.getAllNews(strings[0]).execute().body();
-                    if (new_api != null) {
-                        New aNew = new New(new_api.getId(), new_api.getTitle(),
-                                new_api.getBody(), new_api.getGame(),
-                                new_api.getCoverImage(), new_api.getDescription(),
-                                new_api.getCreatedDate(), );
-                        //  mdao_user.insert(user);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return false;
+            list_new_api = apiservice.getAllNews(token).execute().body();
+            if (list_new_api != null) {
+                mdao_new.deleteAll();
+                List<String> favoriteNewList = mdao_favoritenew.getAllNewsID();
+                for (New_API n : list_new_api) {
+                    New aNew = new New(n.getId(), n.getTitle(),
+                            n.getBody(), n.getGame(),
+                            n.getCoverImage(), n.getDescription(),
+                            n.getCreatedDate(), favoriteNewList.contains(n.getId()));
+                    mdao_new.insert(aNew);
                 }
-                return true;
+            } else {
+                return R.string.api_error;
             }
-        };
-        try {
-            Boolean resultado = task.execute(string).get();
-            return resultado;
-        } catch (InterruptedException e) {
+        } catch (IOException e) {
             e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+            return R.string.internal_error;
         }
-        return false;
+        return R.string.success;
     }
+
+    public int PopulatePlayers(final String token) {
+        List<Player_API> list_player_api = null;
+        try {
+            list_player_api = apiservice.getAllPlayers(token).execute().body();
+            if (list_player_api != null) {
+                mdao_player.deleteAll();
+                for (Player_API p : list_player_api) {
+                    Player player = new Player(p.getId(), p.getAvatar(), p.getName(), p.getBiografia(), p.getGame());
+                    mdao_player.insert(player);
+                }
+            } else {
+                return R.string.api_error;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return R.string.internal_error;
+        }
+        return R.string.success;
+    }
+
 }

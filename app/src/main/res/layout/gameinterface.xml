@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryDark"
         app:tabTextColor="@color/colorAccent"
-        app:tabSelectedTextColor="@color/colorPrimary">
+        app:tabSelectedTextColor="#14b48c">
 
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"

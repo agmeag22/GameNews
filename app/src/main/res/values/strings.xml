@@ -34,5 +34,10 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="update_btn">Update</string>
+    <string name="just_change_it">Just change it!</string>
+    <string name="internal_error">Ups, Something went wrong...</string>
+    <string name="api_error">Ups, server not found...</string>
+    <string name="success">Nice!, Everything went like planned!</string>
 
 </resources>

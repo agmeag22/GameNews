@@ -1,5 +1,6 @@
 package com.meag.gamenews.Adapters;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,15 +9,28 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.meag.gamenews.Database.New;
 import com.meag.gamenews.ForAPI.New_API;
 import com.meag.gamenews.R;
 
 import java.util.List;
 
-public class GeneralNewsAdapter extends RecyclerView.Adapter<GeneralNewsAdapter.GeneralNewsViewHolder> {
-    private List<New_API> newList; // Cached copy of words
+public abstract class GeneralNewsAdapter extends RecyclerView.Adapter<GeneralNewsAdapter.GeneralNewsViewHolder> {
+    private List<New> newList; // Cached copy of words
+    private Context context;
 
-    public GeneralNewsAdapter(List<New_API> newList) {
+    public GeneralNewsAdapter(Context context) {
+        this.context = context;
+
+    }
+
+    public List<New> getNewList() {
+        return newList;
+    }
+
+    public void setNewList(List<New> newList) {
         this.newList = newList;
     }
 
@@ -27,15 +41,39 @@ public class GeneralNewsAdapter extends RecyclerView.Adapter<GeneralNewsAdapter.
     }
 
     @Override
-    public void onBindViewHolder(GeneralNewsViewHolder holder, int position) {
+    public void onBindViewHolder(final GeneralNewsViewHolder holder, final int position) {
         if (newList != null) {
-            if (newList.get(position).getCoverImage() != null) {
-                // holder.newspic=set
+            if (newList.get(position).getTitle() != null) {
+                holder.newsTitle.setText(newList.get(position).getTitle());
             }
+            if (newList.get(position).getDescription() != null) {
+                holder.newsDescription.setText(newList.get(position).getDescription());
+            }
+            if (newList.get(position).getCoverImage() != null) {
+                Glide.with(context).load(newList.get(position).getCoverImage()).apply(RequestOptions.centerCropTransform()).into(holder.newspic);
+            }
+            if (newList.get(position).isFavorite()) {
+                holder.newsfavoritemarker.setImageResource(android.R.drawable.star_big_on);
+            } else {
+                holder.newsfavoritemarker.setImageResource(android.R.drawable.star_big_off);
+            }
+            holder.newsfavoritemarker.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (newList.get(position).isFavorite()) {
+                        setFavoriteOff(newList.get(position).getId());
+                        holder.newsfavoritemarker.setImageResource(android.R.drawable.star_big_off);
 
-        } else {
+                    } else {
+                        setFavoriteOn(newList.get(position).getId());
+                        holder.newsfavoritemarker.setImageResource(android.R.drawable.star_big_on);
+                    }
+
+                }
+            });
 
         }
+
     }
 
 
@@ -51,13 +89,20 @@ public class GeneralNewsAdapter extends RecyclerView.Adapter<GeneralNewsAdapter.
     class GeneralNewsViewHolder extends RecyclerView.ViewHolder {
         ImageView newspic;
         ImageButton newsfavoritemarker;
-        TextView newsTitle;
+        TextView newsTitle, newsDescription;
 
         private GeneralNewsViewHolder(View itemView) {
             super(itemView);
             newspic = itemView.findViewById(R.id.image_news);
             newsfavoritemarker = itemView.findViewById(R.id.news_favorite);
             newsTitle = itemView.findViewById(R.id.title_news);
+            newsDescription = itemView.findViewById(R.id.description_news);
         }
     }
+
+    public abstract void setFavoriteOn(String id);
+
+    public abstract void setFavoriteOff(String id);
+
+
 }

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    android:id="@+id/login">
+    tools:context=".Fragments.Settings">
 
 
     <ScrollView
@@ -25,23 +25,22 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/sign_in_hithere"
-                android:layout_marginBottom="5dp"
+                android:text="You don't like something?"
                 android:textSize="18sp"
                 android:textStyle="bold"
+                android:layout_marginBottom="5dp"
                 android:layout_marginTop="10dp"
                 style="@style/firsttextlog" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/sign_in_comment"
+                android:text="@string/just_change_it"
                 android:textSize="12sp"
                 android:layout_marginBottom="30dp"
                 style="@style/firsttextlog" />
 
             <EditText
-                android:id="@+id/usernamelogin"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:hint="@string/username"
@@ -52,12 +51,13 @@
                 android:textSize="14sp"
                 android:drawablePadding="5dp"
                 android:paddingStart="10dp"
-
+                android:id="@+id/userEmail"
                 android:layout_marginBottom="10dp"
-                android:paddingLeft="10dp" />
+                android:paddingLeft="10dp"
+                android:drawableStart="@drawable/ic_user_icon" />
 
             <EditText
-                android:id="@+id/userPasswordlogin"
+                android:id="@+id/userPasswordRegister"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:hint="@string/password"
@@ -69,16 +69,34 @@
                 android:drawablePadding="5dp"
                 android:paddingStart="10dp"
                 android:inputType="textPassword"
+
+                android:layout_marginBottom="10dp"
+
+                android:paddingLeft="10dp" />
+
+            <EditText
+                android:id="@+id/userCPasswordRegister"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:hint="@string/confirm_password"
+                android:background="@drawable/rounded_white"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:drawableLeft="@drawable/ic_confirm_icon"
+                android:textSize="14sp"
+                android:drawablePadding="5dp"
+                android:paddingStart="10dp"
+                android:inputType="textPassword"
+
                 android:layout_marginBottom="10dp"
                 android:paddingLeft="10dp" />
 
 
             <Button
-                android:id="@+id/sign_in_button"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:textColor="@android:color/white"
-                android:text="@string/sign_in_text"
+                android:text="@string/update_btn"
                 android:textStyle="normal"
                 android:background="@drawable/register_button"
                 android:layout_gravity="center"
@@ -87,31 +105,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="15dp"
-                android:layout_gravity="center">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/not_registered_yet"
-                    android:textColor="@color/colorAccent"
-                    />
-
-                <TextView
-                    android:id="@+id/register_access"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/register"
-                    android:paddingStart="5dp"
-                    android:paddingEnd="5dp"
-                    android:textStyle="bold"
-                    android:textColor="#334fff" />
-
-            </LinearLayout>
         </LinearLayout>
 
 

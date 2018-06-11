@@ -19,18 +19,18 @@ public class Player {
     @ColumnInfo(name = "name")
     private String name;
 
-    @ColumnInfo(name = "biografia")
-    private String biografia;
+    @ColumnInfo(name = "biografy")
+    private String biography;
 
     @ColumnInfo(name = "game")
     private String game;
 
 
-    public Player(String avatar, String id, String name, String biografia, String game) {
-        this.avatar = avatar;
+    public Player(String id, String avatar, String name, String biography, String game) {
         this.id = id;
+        this.avatar = avatar;
         this.name = name;
-        this.biografia = biografia;
+        this.biography = biography;
         this.game = game;
     }
 
@@ -58,12 +58,12 @@ public class Player {
         this.name = name;
     }
 
-    public String getBiografia() {
-        return biografia;
+    public String getBiography() {
+        return biography;
     }
 
-    public void setBiografia(String biografia) {
-        this.biografia = biografia;
+    public void setBiography(String biography) {
+        this.biography = biography;
     }
 
     public String getGame() {
