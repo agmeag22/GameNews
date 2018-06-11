@@ -76,7 +76,10 @@ public class User_API {
 
     @Override
     public String toString() {
-        return new StringBuilder().append("\nfavoriteNews:" + favoriteNews).append("\n").append("id:" + id).append("\n").append("user:" + user).append("\n").append("\n").append("password:" + password).append("\n").append("createdDate:" + createdDate).append("\n").append("v:" + v).append("\n").toString();
+        return new StringBuilder().append("\nfavoriteNews:" + favoriteNews).append("\n").
+                append("id:" + id).append("\n").append("user:" + user).append("\n").append("\n").
+                append("password:" + password).append("\n").append("createdDate:" + createdDate).
+                append("\n").append("v:" + v).append("\n").toString();
     }
 
 }

@@ -19,6 +19,7 @@ public class Repository {
     private DAO_New mdao_new;
     private DAO_Player mdao_player;
     private DAO_User mdao_user;
+    private DAO_FavoriteNew mdao_favoritenew;
     private LiveData<List<New>> mAll_News;
     private LiveData<List<New>> mAll_Favorites;
     private APIService apiservice;
@@ -28,6 +29,7 @@ public class Repository {
         mdao_new = appDatabase.newDAO();
         mdao_player = appDatabase.playerDAO();
         mdao_user = appDatabase.userDAO();
+        mdao_favoritenew = appDatabase.favoriteNewDAO();
         mAll_News = mdao_new.getNews();
         mAll_Favorites = mdao_new.getFavoritesNews();
         apiservice = API_Utils.getAPIService();
@@ -84,7 +86,7 @@ public class Repository {
         return false;
     }
 
-    public boolean fillNews(final String string) {
+    public boolean alucivoaqueactualizaraslasnoticias(final String string) {
 
         @SuppressLint("StaticFieldLeak") AsyncTask<String, Void, Boolean> task = new AsyncTask<String, Void, Boolean>() {
             @Override
@@ -93,7 +95,10 @@ public class Repository {
 
                     New_API new_api = (New_API) apiservice.getAllNews(strings[0]).execute().body();
                     if (new_api != null) {
-                        New aNew = new New(new_api.getId(), new_api.getTitle(), new_api.getBody(), new_api.getGame(), new_api.getCoverImage(), new_api.getDescription(), new_api.getCreatedDate(), );
+                        New aNew = new New(new_api.getId(), new_api.getTitle(),
+                                new_api.getBody(), new_api.getGame(),
+                                new_api.getCoverImage(), new_api.getDescription(),
+                                new_api.getCreatedDate(), );
                         mdao_user.insert(user);
                     }
                 } catch (IOException e) {

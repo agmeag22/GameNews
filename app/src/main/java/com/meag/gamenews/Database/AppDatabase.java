@@ -17,6 +17,8 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract DAO_User userDAO();
 
+    public abstract DAO_FavoriteNew favoriteNewDAO();
+
     private static AppDatabase INSTANCE;
 
 
