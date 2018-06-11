@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 
 import com.meag.gamenews.ForAPI.APIService;
 import com.meag.gamenews.ForAPI.API_Utils;
+import com.meag.gamenews.ForAPI.FavoriteNew_API;
 import com.meag.gamenews.ForAPI.New_API;
 import com.meag.gamenews.ForAPI.User_API;
 
@@ -65,8 +66,14 @@ public class Repository {
 
                     User_API user_api = (User_API) apiservice.getUserDetails(strings[0]).execute().body();
                     if (user_api != null) {
-                        User user = new User(user_api.getId(), user_api.getUser(), user_api.getAvatar());
+                        User user = new User(user_api.getId(), user_api.getUser(), "");
                         mdao_user.insert(user);
+                    }
+                    List<FavoriteNew_API> favoriteNew_api = user_api.getFavoriteNews();
+                    if (favoriteNew_api != null) {
+                        for (FavoriteNew_API n : favoriteNew_api) {
+                            mdao_favoritenew.insert(new FavoriteNew(n.getId()));
+                        }
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -86,7 +93,7 @@ public class Repository {
         return false;
     }
 
-    public boolean alucivoaqueactualizaraslasnoticias(final String string) {
+    public boolean UpdateNews(final String string) {
 
         @SuppressLint("StaticFieldLeak") AsyncTask<String, Void, Boolean> task = new AsyncTask<String, Void, Boolean>() {
             @Override
@@ -99,7 +106,7 @@ public class Repository {
                                 new_api.getBody(), new_api.getGame(),
                                 new_api.getCoverImage(), new_api.getDescription(),
                                 new_api.getCreatedDate(), );
-                        mdao_user.insert(user);
+                        //  mdao_user.insert(user);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
