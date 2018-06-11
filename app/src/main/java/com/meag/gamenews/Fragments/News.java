@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -28,7 +29,7 @@ import static android.content.Context.MODE_PRIVATE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class News extends Fragment {
+public class News extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     RecyclerView recyclerView;
     GeneralNewsAdapter adapter;
@@ -36,7 +37,7 @@ public class News extends Fragment {
     ViewModel viewModel;
     SharedPreferences sp;
     private LiveData<List<New>> list;
-
+    SwipeRefreshLayout swipeRefreshLayout;
 
     public News() {
         // Required empty public constructor
@@ -50,7 +51,19 @@ public class News extends Fragment {
         View v = inflater.inflate(R.layout.container, container, false);
         viewModel = ViewModelProviders.of(this).get(ViewModel.class);
         recyclerView = v.findViewById(R.id.recycler_view);
-        gridLayoutManager = new GridLayoutManager(getContext(), 3);
+        swipeRefreshLayout = v.findViewById(R.id.swipe);
+        swipeRefreshLayout.setOnRefreshListener(this);
+        gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (adapter.getItemViewType(position) == 1) {
+                    return 2;
+                } else {
+                    return 1;
+                }
+            }
+        });
         adapter = new GeneralNewsAdapter(getContext()) {
             @Override
             public void setFavoriteOn(String id) {
@@ -73,8 +86,17 @@ public class News extends Fragment {
                 adapter.notifyDataSetChanged();
             }
         });
+
+        doInBackground task = new doInBackground();
+        task.execute();
         return v;
 
+    }
+
+    @Override
+    public void onRefresh() {
+        doInBackground task = new doInBackground();
+        task.execute();
     }
 
     public class doInBackground extends AsyncTask<Void, Void, Void> {
@@ -86,6 +108,14 @@ public class News extends Fragment {
 
             return null;
         }
+
+        //For swipe functionality
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            swipeRefreshLayout.setRefreshing(false);
+            super.onPostExecute(aVoid);
+        }
     }
+
 
 }

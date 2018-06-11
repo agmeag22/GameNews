@@ -1,15 +1,19 @@
 package com.meag.gamenews.Database;
 
 import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.support.annotation.NonNull;
 
 import java.util.List;
 
 
-public class ViewModel extends android.arch.lifecycle.ViewModel {
+public class ViewModel extends AndroidViewModel {
     Repository repository;
 
-    public ViewModel(Application application) {
+
+    public ViewModel(@NonNull Application application) {
+        super(application);
         this.repository = new Repository(application);
     }
 

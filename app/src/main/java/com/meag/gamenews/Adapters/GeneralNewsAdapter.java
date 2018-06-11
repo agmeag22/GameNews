@@ -100,6 +100,15 @@ public abstract class GeneralNewsAdapter extends RecyclerView.Adapter<GeneralNew
         }
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        if (position == 0) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+
     public abstract void setFavoriteOn(String id);
 
     public abstract void setFavoriteOff(String id);
