@@ -1,4 +1,4 @@
-package com.meag.gamenews.Adapters;
+package com.meag.gamenews.Menu;
 
 import android.content.Context;
 import android.graphics.Typeface;

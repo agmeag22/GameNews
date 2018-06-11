@@ -1,4 +1,4 @@
-package com.meag.gamenews;
+package com.meag.gamenews.Activities;
 
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
@@ -16,8 +16,11 @@ import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
-import com.meag.gamenews.Login.Register;
+import com.meag.gamenews.Fragments.Game;
 import com.meag.gamenews.Menu.MenuModel;
+import com.meag.gamenews.Fragments.News;
+import com.meag.gamenews.R;
+import com.meag.gamenews.Fragments.Start;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -137,7 +140,7 @@ public class MainActivityLogged extends AppCompatActivity
     //Setting adapter for the expandable list and making the visuals appear, + adding what would happen when selected
     private void populateExpandableList() {
 
-        expandableListAdapter = new com.meag.gamenews.Adapters.ExpandableListAdapter(this, headerList, childList);
+        expandableListAdapter = new com.meag.gamenews.Menu.ExpandableListAdapter(this, headerList, childList);
         expandableListView.setAdapter(expandableListAdapter);
 
         //Click listener for parent option

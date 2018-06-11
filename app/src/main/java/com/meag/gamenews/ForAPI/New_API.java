@@ -3,7 +3,7 @@ package com.meag.gamenews.ForAPI;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class FavoritesNews {
+public class New_API {
 
     @SerializedName("_id")
     @Expose
@@ -17,6 +17,12 @@ public class FavoritesNews {
     @SerializedName("game")
     @Expose
     private String game;
+    @SerializedName("coverImage")
+    @Expose
+    private String coverImage;
+    @SerializedName("description")
+    @Expose
+    private String description;
     @SerializedName("created_date")
     @Expose
     private String createdDate;
@@ -54,6 +60,22 @@ public class FavoritesNews {
 
     public void setGame(String game) {
         this.game = game;
+    }
+
+    public String getCoverImage() {
+        return coverImage;
+    }
+
+    public void setCoverImage(String coverImage) {
+        this.coverImage = coverImage;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getCreatedDate() {

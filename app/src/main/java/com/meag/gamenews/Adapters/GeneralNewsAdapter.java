@@ -1,6 +1,5 @@
 package com.meag.gamenews.Adapters;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,15 +8,15 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.meag.gamenews.ForAPI.New;
+import com.meag.gamenews.ForAPI.New_API;
 import com.meag.gamenews.R;
 
 import java.util.List;
 
 public class GeneralNewsAdapter extends RecyclerView.Adapter<GeneralNewsAdapter.GeneralNewsViewHolder> {
-    private List<New> newList; // Cached copy of words
+    private List<New_API> newList; // Cached copy of words
 
-    public GeneralNewsAdapter(List<New> newList) {
+    public GeneralNewsAdapter(List<New_API> newList) {
         this.newList = newList;
     }
 

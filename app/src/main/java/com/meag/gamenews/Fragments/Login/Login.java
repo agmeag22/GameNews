@@ -1,4 +1,4 @@
-package com.meag.gamenews.Login;
+package com.meag.gamenews.Fragments.Login;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,8 +15,8 @@ import android.widget.TextView;
 
 import com.meag.gamenews.ForAPI.APIService;
 import com.meag.gamenews.ForAPI.API_Utils;
-import com.meag.gamenews.ForAPI.Token;
-import com.meag.gamenews.MainActivityLogged;
+import com.meag.gamenews.ForAPI.Token_API;
+import com.meag.gamenews.Activities.MainActivityLogged;
 import com.meag.gamenews.R;
 
 import retrofit2.Call;
@@ -84,9 +84,9 @@ public class Login extends Fragment {
     public void logIn(String user, String password) {
         apiservice = API_Utils.getAPIService();
 
-        apiservice.login(user, password).enqueue(new Callback<Token>() {
+        apiservice.login(user, password).enqueue(new Callback<Token_API>() {
             @Override
-            public void onResponse(Call<Token> call, Response<Token> response) {
+            public void onResponse(Call<Token_API> call, Response<Token_API> response) {
                 if (response.isSuccessful()) {
                     showResponse(response.toString());
                     showResponse(response.body().getToken());
@@ -99,7 +99,7 @@ public class Login extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Token> call, Throwable t) {
+            public void onFailure(Call<Token_API> call, Throwable t) {
 
             }
         });

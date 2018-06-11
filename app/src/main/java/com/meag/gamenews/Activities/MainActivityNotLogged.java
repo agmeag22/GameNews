@@ -1,4 +1,4 @@
-package com.meag.gamenews;
+package com.meag.gamenews.Activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -6,6 +6,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.meag.gamenews.R;
+import com.meag.gamenews.Fragments.Start;
 
 public class MainActivityNotLogged extends AppCompatActivity {
     public int logged = 0;

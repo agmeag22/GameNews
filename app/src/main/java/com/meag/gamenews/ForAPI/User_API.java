@@ -5,11 +5,11 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class User {
+public class User_API {
 
     @SerializedName("favoriteNews")
     @Expose
-    private List<FavoritesNews> favoriteNews = null;
+    private List<FavoriteNew_API> favoriteNews = null;
     @SerializedName("_id")
     @Expose
     private String id;
@@ -25,15 +25,12 @@ public class User {
     @SerializedName("__v")
     @Expose
     private Integer v;
-    @SerializedName("avatar")
-    @Expose
-    private String avatar;
 
-    public List<FavoritesNews> getFavoriteNews() {
+    public List<FavoriteNew_API> getFavoriteNews() {
         return favoriteNews;
     }
 
-    public void setFavoriteNews(List<FavoritesNews> favoriteNews) {
+    public void setFavoriteNews(List<FavoriteNew_API> favoriteNews) {
         this.favoriteNews = favoriteNews;
     }
 
@@ -77,12 +74,9 @@ public class User {
         this.v = v;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    @Override
+    public String toString() {
+        return new StringBuilder().append("\nfavoriteNews:" + favoriteNews).append("\n").append("id:" + id).append("\n").append("user:" + user).append("\n").append("\n").append("password:" + password).append("\n").append("createdDate:" + createdDate).append("\n").append("v:" + v).append("\n").toString();
     }
 
 }

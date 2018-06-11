@@ -3,7 +3,7 @@ package com.meag.gamenews.ForAPI;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Token {
+public class Token_API {
 
     @SerializedName("token")
     @Expose

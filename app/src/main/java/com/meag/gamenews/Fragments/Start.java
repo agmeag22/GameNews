@@ -1,4 +1,4 @@
-package com.meag.gamenews;
+package com.meag.gamenews.Fragments;
 
 
 import android.os.Bundle;
@@ -9,8 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.meag.gamenews.Login.Login;
-import com.meag.gamenews.Login.Register;
+import com.meag.gamenews.Fragments.Login.Login;
+import com.meag.gamenews.Fragments.Login.Register;
+import com.meag.gamenews.R;
 
 /**
  * A simple {@link Fragment} subclass.
