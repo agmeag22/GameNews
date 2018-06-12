@@ -30,10 +30,10 @@ public interface DAO_New {
     @Query("SELECT * FROM new WHERE favorite=1")
     LiveData<List<New>> getFavoritesNews();
 
-    @Query("SELECT * from new WHERE game=:category")
+    @Query("SELECT * from new WHERE game=:category ORDER BY created_date DESC")
     LiveData<List<New>> getNewsByCategory(String category);
 
-    @Query("SELECT game from new GROUP BY game ORDER BY game")
+    @Query("SELECT game from new GROUP BY game ORDER BY created_date DESC")
     LiveData<List<String>> getCategories();
 
 
