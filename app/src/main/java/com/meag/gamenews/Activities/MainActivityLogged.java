@@ -1,6 +1,10 @@
 package com.meag.gamenews.Activities;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.SharedPreferences;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
@@ -16,7 +20,10 @@ import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
-import com.meag.gamenews.Fragments.Game;
+import com.meag.gamenews.Database.ViewModel;
+import com.meag.gamenews.Fragments.Games;
+import com.meag.gamenews.Fragments.TabbedPlayers;
+import com.meag.gamenews.Fragments.Settings;
 import com.meag.gamenews.Menu.MenuModel;
 import com.meag.gamenews.Fragments.News;
 import com.meag.gamenews.R;
@@ -33,11 +40,22 @@ public class MainActivityLogged extends AppCompatActivity
     List<MenuModel> headerList = new ArrayList<>();
     HashMap<MenuModel, List<MenuModel>> childList = new HashMap<>();
     String news_title, games_title, settings_title, favorites_title, logout_title;
+    ViewModel viewModel;
+    private List<MenuModel> childModelsList;
+    private LiveData<List<String>> listLiveData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (savedInstanceState == null) {
+            Fragment fragment;
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            fragment = new News();
+            transaction.replace(R.id.content, fragment).commit();
+        }
+
+        viewModel = ViewModelProviders.of(this).get(ViewModel.class);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -109,13 +127,19 @@ public class MainActivityLogged extends AppCompatActivity
 
         menuModel = new MenuModel(games_title, true, true); //Menu of Java Tutorials
         headerList.add(menuModel);
-        List<MenuModel> childModelsList = new ArrayList<>();
-        MenuModel childModel = new MenuModel(getResources().getString(R.string.lol_menu_title), false, false);
-        childModelsList.add(childModel);
-        childModel = new MenuModel(getResources().getString(R.string.dota_menu_title), false, false);
-        childModelsList.add(childModel);
-        childModel = new MenuModel(getResources().getString(R.string.csgo_menu_title), false, false);
-        childModelsList.add(childModel);
+        childModelsList = new ArrayList<>();
+        listLiveData = viewModel.getCategories();
+        listLiveData.observe(this, new Observer<List<String>>() {
+            @Override
+            public void onChanged(@Nullable List<String> strings) {
+                childModelsList.clear();
+                for (String c : strings) {
+                    MenuModel childModel = new MenuModel(c, false, false);
+                    childModelsList.add(childModel);
+                }
+            }
+        });
+
 
         if (menuModel.hasChildren) {
             childList.put(menuModel, childModelsList);
@@ -158,12 +182,12 @@ public class MainActivityLogged extends AppCompatActivity
                         }
 
                         if (headerList.get(groupPosition).menuName.equals(settings_title)) {
-//                            fragment = new Settings();
-//                            transaction.replace(R.id.content, fragment).commit();
+                            fragment = new Settings();
+                            transaction.replace(R.id.content, fragment).commit();
                         }
                         if (headerList.get(groupPosition).menuName.equals(favorites_title)) {
-//                            fragment = new Favorites();
-//                            transaction.replace(R.id.content, fragment).commit();
+                            fragment = new TabbedPlayers();
+                            transaction.replace(R.id.content, fragment).commit();
                         }
                         if (headerList.get(groupPosition).menuName.equals(logout_title)) {
                             SharedPreferences sp = getSharedPreferences(getPackageName(), MODE_PRIVATE);
@@ -187,10 +211,9 @@ public class MainActivityLogged extends AppCompatActivity
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 if (childList.get(headerList.get(groupPosition)) != null) {
                     MenuModel model = childList.get(headerList.get(groupPosition)).get(childPosition);
-                    if (childList.get(headerList.get(groupPosition)).get(childPosition).menuName.equals(getResources().getString(R.string.lol_menu_title)) ||
-                            childList.get(headerList.get(groupPosition)).get(childPosition).menuName.equals(getResources().getString(R.string.dota_menu_title)) ||
-                            childList.get(headerList.get(groupPosition)).get(childPosition).menuName.equals(getResources().getString(R.string.csgo_menu_title))) {
-                        fragment = new Game();
+                    String category = childList.get(headerList.get(groupPosition)).get(childPosition).menuName;
+                    if (listLiveData.getValue().contains(category)) {
+                        fragment = Games.newInstance(category);
                         transaction.replace(R.id.content, fragment).commit();
 
                     }

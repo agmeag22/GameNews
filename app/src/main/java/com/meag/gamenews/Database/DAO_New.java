@@ -33,5 +33,8 @@ public interface DAO_New {
     @Query("SELECT * from new WHERE game=:category")
     LiveData<List<New>> getNewsByCategory(String category);
 
+    @Query("SELECT game from new GROUP BY game ORDER BY game")
+    LiveData<List<String>> getCategories();
+
 
 }

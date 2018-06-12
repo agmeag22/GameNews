@@ -55,6 +55,10 @@ public class Repository {
         return mAll_Favorites;
     }
 
+    public LiveData<List<String>> getCategories() {
+        return mdao_new.getCategories();
+    }
+
     public User getUsers() {
         return mdao_user.getUser();
     }

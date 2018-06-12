@@ -41,6 +41,10 @@ public class ViewModel extends AndroidViewModel {
         return repository.PopulateUserInfo(token);
     }
 
+    public LiveData<List<String>> getCategories() {
+        return repository.getCategories();
+    }
+
     public int PopulateNews(final String token) {
         return repository.PopulateNews(token);
     }

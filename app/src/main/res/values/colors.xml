@@ -2,11 +2,11 @@
 <resources>
     <color name="colorPrimary">#1d1d1d</color>
     <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#dadadada</color>
     <color name="Secondary">#57b457</color>
     <color name="Third">#8b7d7d</color>
-    <color name="colorAccent">#c5b5b5</color>
-    <color name="register">#f5fdff</color>
-    <color name="cardtextbackgroundtitle">#5c383838</color>
-    <color name="cardtextbackground">#2c383838</color>
+    <color name="cardtextbackground">#763b3b3b</color>
+    <color name="colorText">#dadada</color>
+    <color name="back">#c5b5b5</color>
 
 </resources>

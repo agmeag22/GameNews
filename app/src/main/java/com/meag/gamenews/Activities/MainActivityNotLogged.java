@@ -37,6 +37,7 @@ public class MainActivityNotLogged extends AppCompatActivity {
             case 1:
                 Intent intent = new Intent(this, MainActivityLogged.class);
                 startActivity(intent);
+                finish();
         }
 
     }
