@@ -1,4 +1,4 @@
-package com.meag.gamenews.ForAPI;
+package com.meag.gamenews.ForAPI.POJOs;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ public class User_API {
 
     @SerializedName("favoriteNews")
     @Expose
-    private List<FavoriteNew_API> favoriteNews = null;
+    private List<String> favoriteNews = null;
     @SerializedName("_id")
     @Expose
     private String id;
@@ -26,11 +26,11 @@ public class User_API {
     @Expose
     private Integer v;
 
-    public List<FavoriteNew_API> getFavoriteNews() {
+    public List<String> getFavoriteNews() {
         return favoriteNews;
     }
 
-    public void setFavoriteNews(List<FavoriteNew_API> favoriteNews) {
+    public void setFavoriteNews(List<String> favoriteNews) {
         this.favoriteNews = favoriteNews;
     }
 

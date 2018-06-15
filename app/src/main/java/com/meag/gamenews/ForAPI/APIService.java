@@ -1,5 +1,12 @@
 package com.meag.gamenews.ForAPI;
 
+import com.meag.gamenews.ForAPI.POJOs.Message;
+import com.meag.gamenews.ForAPI.POJOs.New_API;
+import com.meag.gamenews.ForAPI.POJOs.Player_API;
+import com.meag.gamenews.ForAPI.POJOs.ResponseFavoriteNew;
+import com.meag.gamenews.ForAPI.POJOs.Token_API;
+import com.meag.gamenews.ForAPI.POJOs.User_API;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -7,6 +14,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -24,7 +32,7 @@ public interface APIService {
 
     //Obtaining list of Users
     @GET("/users")
-    Call<List<User_API>> getAllUsers(@Header("Authorization") String authHeader);
+    Call<List<String>> getAllUsers(@Header("Authorization") String authHeader);
 
     //Adding a User_API
     @POST("/users")
@@ -99,5 +107,16 @@ public interface APIService {
     //Obtain player by Id
     @GET("/players/{id}")
     Call<Player_API> getPlayerByID(@Header("Authorization") String authHeader, @Path("id") String id);
+
+    //Add a favorite new
+    @POST("/users/{id}/fav")
+    @FormUrlEncoded
+    Call<ResponseFavoriteNew> AddFavorite_New_toUser(@Header("Authorization") String authHeader, @Path("id") String id, @Field("new") String n_new);
+
+
+    //Delete a favorite new
+    @FormUrlEncoded
+    @HTTP(method = "DELETE", path = "/users/{id}/fav", hasBody = true)
+    Call<Message> DeleteFavorite_New_fromUser(@Header("Authorization") String authHeader, @Path("id") String id, @Field("new") String n_new);
 
 }

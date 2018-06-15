@@ -1,4 +1,4 @@
-package com.meag.gamenews.ForAPI;
+package com.meag.gamenews.ForAPI.POJOs;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

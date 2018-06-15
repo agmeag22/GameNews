@@ -3,6 +3,7 @@ package com.meag.gamenews.Database;
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
 import java.util.List;
@@ -37,8 +38,8 @@ public class ViewModel extends AndroidViewModel {
         return repository.getUsers();
     }
 
-    public boolean PopulateUserInfo(final String token) {
-        return repository.PopulateUserInfo(token);
+    public boolean PopulateUserInfo(final String token, SharedPreferences sp) {
+        return repository.PopulateUserInfo(token, sp);
     }
 
     public LiveData<List<String>> getCategories() {
@@ -53,5 +54,11 @@ public class ViewModel extends AndroidViewModel {
         return repository.PopulatePlayers(token);
     }
 
+    public boolean Setfavorite(String token, String iduser, String idnew) {
+        return repository.setfavorite(token, iduser, idnew);
+    }
 
+    public boolean Unsetfavorite(String token, String iduser, String idnew) {
+        return repository.unsetfavorite(token, iduser, idnew);
+    }
 }

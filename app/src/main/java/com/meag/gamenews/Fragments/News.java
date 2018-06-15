@@ -66,8 +66,12 @@ public class News extends Fragment implements SwipeRefreshLayout.OnRefreshListen
         });
         adapter = new GeneralNewsAdapter(getContext()) {
             @Override
-            public void setFavoriteOn(String id) {
-                //Guardar Favorito aqui (logica)
+            public void setFavoriteOn(String newid) {
+                String token = sp.getString("token", "");
+                String userid = sp.getString("userid", "");
+
+                viewModel.PopulateUserInfo("Bearer " + token, sp);
+                viewModel.Setfavorite("Bearer " + token, userid, newid);
             }
 
             @Override

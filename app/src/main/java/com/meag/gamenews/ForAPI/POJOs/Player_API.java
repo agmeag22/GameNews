@@ -1,28 +1,36 @@
-package com.meag.gamenews.ForAPI;
+package com.meag.gamenews.ForAPI.POJOs;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class FavoriteNew_API {
+public class Player_API {
 
+    @SerializedName("avatar")
+    @Expose
+    private String avatar;
     @SerializedName("_id")
     @Expose
     private String id;
-    @SerializedName("title")
+    @SerializedName("name")
     @Expose
-    private String title;
-    @SerializedName("body")
+    private String name;
+    @SerializedName("biografia")
     @Expose
-    private String body;
+    private String biografia;
     @SerializedName("game")
     @Expose
     private String game;
-    @SerializedName("created_date")
-    @Expose
-    private String createdDate;
     @SerializedName("__v")
     @Expose
     private Integer v;
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 
     public String getId() {
         return id;
@@ -32,20 +40,20 @@ public class FavoriteNew_API {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getBody() {
-        return body;
+    public String getBiografia() {
+        return biografia;
     }
 
-    public void setBody(String body) {
-        this.body = body;
+    public void setBiografia(String biografia) {
+        this.biografia = biografia;
     }
 
     public String getGame() {
@@ -56,14 +64,6 @@ public class FavoriteNew_API {
         this.game = game;
     }
 
-    public String getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
-    }
-
     public Integer getV() {
         return v;
     }
@@ -71,4 +71,5 @@ public class FavoriteNew_API {
     public void setV(Integer v) {
         this.v = v;
     }
+
 }

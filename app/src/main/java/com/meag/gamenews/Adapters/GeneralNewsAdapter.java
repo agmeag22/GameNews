@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.meag.gamenews.Database.New;
-import com.meag.gamenews.ForAPI.New_API;
+import com.meag.gamenews.Database.Repository;
 import com.meag.gamenews.R;
 
 import java.util.List;
@@ -20,6 +20,7 @@ import java.util.List;
 public abstract class GeneralNewsAdapter extends RecyclerView.Adapter<GeneralNewsAdapter.GeneralNewsViewHolder> {
     private List<New> newList; // Cached copy of words
     private Context context;
+    private Repository repository;
 
     public GeneralNewsAdapter(Context context) {
         this.context = context;
@@ -61,6 +62,7 @@ public abstract class GeneralNewsAdapter extends RecyclerView.Adapter<GeneralNew
                 @Override
                 public void onClick(View v) {
                     if (newList.get(position).isFavorite()) {
+
                         setFavoriteOff(newList.get(position).getId());
                         holder.newsfavoritemarker.setImageResource(android.R.drawable.star_big_off);
 

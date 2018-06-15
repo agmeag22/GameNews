@@ -36,5 +36,10 @@ public interface DAO_New {
     @Query("SELECT game from new GROUP BY game ORDER BY created_date DESC")
     LiveData<List<String>> getCategories();
 
+    @Query("UPDATE new SET favorite=1 WHERE _id=:id")
+    void setFavorite(String id);
+
+    @Query("UPDATE new SET favorite=0 WHERE _id=:id")
+    void unsetFavorite(String id);
 
 }

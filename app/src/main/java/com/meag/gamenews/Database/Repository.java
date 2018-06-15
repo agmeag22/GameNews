@@ -1,16 +1,17 @@
 package com.meag.gamenews.Database;
 
-import android.annotation.SuppressLint;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 
 import com.meag.gamenews.ForAPI.APIService;
 import com.meag.gamenews.ForAPI.API_Utils;
-import com.meag.gamenews.ForAPI.FavoriteNew_API;
-import com.meag.gamenews.ForAPI.New_API;
-import com.meag.gamenews.ForAPI.Player_API;
-import com.meag.gamenews.ForAPI.User_API;
+import com.meag.gamenews.ForAPI.POJOs.Message;
+import com.meag.gamenews.ForAPI.POJOs.New_API;
+import com.meag.gamenews.ForAPI.POJOs.Player_API;
+import com.meag.gamenews.ForAPI.POJOs.ResponseFavoriteNew;
+import com.meag.gamenews.ForAPI.POJOs.User_API;
 import com.meag.gamenews.R;
 
 import java.io.IOException;
@@ -35,8 +36,32 @@ public class Repository {
         mdao_favoritenew = appDatabase.favoriteNewDAO();
         mAll_News = mdao_new.getNews();
         mAll_Favorites = mdao_new.getFavoritesNews();
-        apiservice = API_Utils.getAPIService();
+        apiservice = API_Utils.getAPIService(application);
 
+    }
+
+    public boolean setfavorite(String token, String iduser, String idnew) {
+        SetFavoriteTask task = new SetFavoriteTask(token, iduser, idnew);
+        try {
+            return task.execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean unsetfavorite(String token, String iduser, String idnew) {
+        UnsetFavoriteTask task = new UnsetFavoriteTask(token, iduser, idnew);
+        try {
+            return task.execute().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public LiveData<List<New>> getAllNews() {
@@ -63,28 +88,30 @@ public class Repository {
         return mdao_user.getUser();
     }
 
-    public boolean PopulateUserInfo(final String token) {
+    public boolean PopulateUserInfo(final String token, SharedPreferences sp) {
 
-                try {
+        try {
 
-                    User_API user_api = (User_API) apiservice.getUserDetails(token).execute().body();
-                    if (user_api != null) {
-                        mdao_user.deleteAll();
-                        User user = new User(user_api.getId(), user_api.getUser(), "");
-                        mdao_user.insert(user);
-                    }
-                    List<FavoriteNew_API> favoriteNew_api = user_api.getFavoriteNews();
-                    if (favoriteNew_api != null) {
-                        for (FavoriteNew_API n : favoriteNew_api) {
-                            mdao_favoritenew.insert(new FavoriteNew(n.getId()));
-                        }
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return false;
-                }
-                return true;
+            User_API user_api = (User_API) apiservice.getUserDetails(token).execute().body();
+            if (user_api != null) {
+                sp.edit().putString("userid", user_api.getId()).apply();
+                sp.edit().putString("username", user_api.getUser()).apply();
+                mdao_user.deleteAll();
+                User user = new User(user_api.getId(), user_api.getUser(), "");
+                mdao_user.insert(user);
             }
+            List<String> favoriteNew_api = user_api.getFavoriteNews();
+            if (favoriteNew_api != null) {
+                for (String n : favoriteNew_api) {
+                    mdao_favoritenew.insert(new FavoriteNew(n));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 
 
     public int PopulateNews(final String token) {
@@ -129,6 +156,60 @@ public class Repository {
             return R.string.internal_error;
         }
         return R.string.success;
+    }
+
+    public class SetFavoriteTask extends AsyncTask<Void, Void, Boolean> {
+        String token, iduser, idnew;
+
+        public SetFavoriteTask(String token, String iduser, String idnew) {
+            this.token = token;
+            this.iduser = iduser;
+            this.idnew = idnew;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            try {
+                ResponseFavoriteNew responseFavoriteNew = apiservice.AddFavorite_New_toUser
+                        (token, iduser, idnew).execute().body();
+                if (responseFavoriteNew != null) {
+                    FavoriteNew favoriteNew = new FavoriteNew(idnew);
+                    mdao_favoritenew.insert(favoriteNew);
+                    mdao_new.setFavorite(idnew);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+            return true;
+        }
+
+    }
+
+    public class UnsetFavoriteTask extends AsyncTask<Void, Void, Boolean> {
+        String token, iduser, idnew;
+
+        public UnsetFavoriteTask(String token, String iduser, String idnew) {
+            this.token = token;
+            this.iduser = iduser;
+            this.idnew = idnew;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            try {
+                Message responseFavoriteNew = apiservice.DeleteFavorite_New_fromUser(token, iduser, idnew).execute().body();
+                if (responseFavoriteNew != null) {
+                    mdao_favoritenew.delete(idnew);
+                    mdao_new.unsetFavorite(idnew);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+            return true;
+        }
+
     }
 
 }
