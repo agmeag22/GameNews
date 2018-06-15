@@ -38,7 +38,8 @@ public class News extends Fragment implements SwipeRefreshLayout.OnRefreshListen
     SharedPreferences sp;
     private LiveData<List<New>> list;
     SwipeRefreshLayout swipeRefreshLayout;
-
+    SetFavoriteOnBackground setFavoriteOnBackground;
+    UnsetFavoriteOnBackground unsetFavoriteOnBackground;
     public News() {
         // Required empty public constructor
     }
@@ -67,16 +68,14 @@ public class News extends Fragment implements SwipeRefreshLayout.OnRefreshListen
         adapter = new GeneralNewsAdapter(getContext()) {
             @Override
             public void setFavoriteOn(String newid) {
-                String token = sp.getString("token", "");
-                String userid = sp.getString("userid", "");
-
-                viewModel.PopulateUserInfo("Bearer " + token, sp);
-                viewModel.Setfavorite("Bearer " + token, userid, newid);
+                setFavoriteOnBackground = new SetFavoriteOnBackground(newid);
+                setFavoriteOnBackground.execute();
             }
 
             @Override
-            public void setFavoriteOff(String id) {
-                //Aqui tambien...l o l
+            public void setFavoriteOff(String newid) {
+                unsetFavoriteOnBackground = new UnsetFavoriteOnBackground(newid);
+                unsetFavoriteOnBackground.execute();
 
             }
         };
@@ -121,5 +120,53 @@ public class News extends Fragment implements SwipeRefreshLayout.OnRefreshListen
         }
     }
 
+    public class SetFavoriteOnBackground extends AsyncTask<Void, Void, Void> {
+        String newid;
+
+        public SetFavoriteOnBackground(String newid) {
+            this.newid = newid;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            String token = sp.getString("token", "");
+            String userid = sp.getString("userid", "");
+
+            viewModel.PopulateUserInfo("Bearer " + token, sp);
+            viewModel.Setfavorite("Bearer " + token, userid, newid);
+            return null;
+        }
+
+        //For swipe functionality
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            swipeRefreshLayout.setRefreshing(false);
+            super.onPostExecute(aVoid);
+        }
+
+    }
+
+    public class UnsetFavoriteOnBackground extends AsyncTask<Void, Void, Void> {
+        String newid;
+
+        public UnsetFavoriteOnBackground(String newid) {
+            this.newid = newid;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            String token = sp.getString("token", "");
+            String userid = sp.getString("userid", "");
+            viewModel.Unsetfavorite("Bearer " + token, userid, newid);
+            return null;
+        }
+
+        //For swipe functionality
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            swipeRefreshLayout.setRefreshing(false);
+            super.onPostExecute(aVoid);
+        }
+    }
 
 }

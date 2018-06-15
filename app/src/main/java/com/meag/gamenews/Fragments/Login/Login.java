@@ -104,10 +104,10 @@ public class Login extends Fragment {
             try {
 
                 if (username != null && password != null) {
-                    Token_API token = apiservice.login(username.toString(), password.toString()).execute().body();
+                    Token_API token = apiservice.login(username.getText().toString(), password.getText().toString()).execute().body();
                     if (token != null) {
                         sp.edit().putString("token", token.getToken()).apply();
-                        viewModel.PopulateUserInfo(token.getToken(), sp);
+                        viewModel.PopulateUserInfo("Bearer " + token.getToken(), sp);
                         Intent intent = new Intent(getContext(), MainActivityLogged.class);
                         startActivity(intent);
                     }
