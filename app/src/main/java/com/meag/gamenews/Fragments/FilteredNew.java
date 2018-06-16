@@ -38,6 +38,7 @@ public class FilteredNew extends Fragment implements SwipeRefreshLayout.OnRefres
     private LiveData<List<New>> list;
     SwipeRefreshLayout swipeRefreshLayout;
     private String filter;
+    private Observer myobserver;
 
 
     public FilteredNew() {
@@ -53,6 +54,14 @@ public class FilteredNew extends Fragment implements SwipeRefreshLayout.OnRefres
         return fragment;
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (getArguments() != null) {
+            filter = getArguments().getString("filter");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,6 +70,7 @@ public class FilteredNew extends Fragment implements SwipeRefreshLayout.OnRefres
         View v = inflater.inflate(R.layout.container, container, false);
         recyclerView = v.findViewById(R.id.recycler_view);
         swipeRefreshLayout = v.findViewById(R.id.swipe);
+        sp = getActivity().getSharedPreferences(getActivity().getPackageName(), MODE_PRIVATE);
         Methods methods = new Methods();
         if (!methods.isOnline(getActivity().getApplication())) {
             Snackbar snackbar = Snackbar
@@ -68,7 +78,6 @@ public class FilteredNew extends Fragment implements SwipeRefreshLayout.OnRefres
             snackbar.show();
 //            Toast.makeText(getActivity(),R.string.snackbar_nointernet, Toast.LENGTH_SHORT).show();
         }
-        filter = getArguments() != null ? getArguments().getString("filter") : "";
         viewModel = ViewModelProviders.of(this).get(ViewModel.class);
         swipeRefreshLayout.setOnRefreshListener(this);
         gridLayoutManager = new GridLayoutManager(getContext(), 2);
@@ -102,16 +111,17 @@ public class FilteredNew extends Fragment implements SwipeRefreshLayout.OnRefres
         };
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(gridLayoutManager);
-        list = viewModel.getNewsByCategory("%"+filter+"%");
+        list = viewModel.getNewsByTitleLike("%"+filter+"%");
 //        adapter.setNewList(list.getValue());
 //        adapter.notifyDataSetChanged();
-        list.observe(this, new Observer<List<New>>() {
+        myobserver = new Observer<List<New>>() {
             @Override
             public void onChanged(@Nullable List<New> news) {
                 adapter.setNewList(news);
                 adapter.notifyDataSetChanged();
             }
-        });
+        };
+        list.observe(this,myobserver);
 
 //        DoInBackground task = new DoInBackground();
 //        task.execute();
@@ -129,15 +139,16 @@ public class FilteredNew extends Fragment implements SwipeRefreshLayout.OnRefres
 
     public void updateFilter(String title){
         if(isAdded()) {
-            list.removeObservers(this);
-            list = viewModel.getNewsByTitleLike("%" + title + "%");
-            list.observe(this, new Observer<List<New>>() {
+            list.removeObserver(myobserver);
+            list = viewModel.getNewsByTitleLike("%"+title+"%");
+            myobserver = new Observer<List<New>>() {
                 @Override
                 public void onChanged(@Nullable List<New> news) {
                     adapter.setNewList(news);
                     adapter.notifyDataSetChanged();
                 }
-            });
+            };
+            list.observe(this,myobserver);
         }
     }
 

@@ -42,6 +42,7 @@ public class News extends Fragment implements SwipeRefreshLayout.OnRefreshListen
     SharedPreferences sp;
     private LiveData<List<New>> list;
     SwipeRefreshLayout swipeRefreshLayout;
+    private String token;
 
     public News() {
         // Required empty public constructor
@@ -54,6 +55,8 @@ public class News extends Fragment implements SwipeRefreshLayout.OnRefreshListen
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.container, container, false);
         swipeRefreshLayout = v.findViewById(R.id.swipe);
+        sp = getActivity().getSharedPreferences(getActivity().getPackageName(), MODE_PRIVATE);
+        token = sp.getString("token", "");
 
         Methods methods = new Methods();
         if (!methods.isOnline(getActivity().getApplication())) {
@@ -121,8 +124,6 @@ public class News extends Fragment implements SwipeRefreshLayout.OnRefreshListen
     public class DoInBackground extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... voids) {
-            sp = getActivity().getSharedPreferences(getActivity().getPackageName(), MODE_PRIVATE);
-            String token = sp.getString("token", "");
             viewModel.PopulateNews("Bearer " + token);
             return null;
         }
