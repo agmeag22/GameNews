@@ -102,6 +102,7 @@ public class Repository {
             }
             List<String> favoriteNew_api = user_api.getFavoriteNews();
             if (favoriteNew_api != null) {
+                mdao_favoritenew.deleteAll();
                 for (String n : favoriteNew_api) {
                     mdao_favoritenew.insert(new FavoriteNew(n));
                 }

@@ -26,10 +26,7 @@ import java.util.List;
 import static android.content.Context.MODE_PRIVATE;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class TabbedNews extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class TabbedNew extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     RecyclerView recyclerView;
     GeneralNewsAdapter adapter;
@@ -40,15 +37,15 @@ public class TabbedNews extends Fragment implements SwipeRefreshLayout.OnRefresh
     SwipeRefreshLayout swipeRefreshLayout;
     private String category;
 
-    public TabbedNews() {
+    public TabbedNew() {
         // Required empty public constructor
     }
 
-    public static TabbedNews newInstance(String category) {
+    public static TabbedNew newInstance(String category) {
 
         Bundle args = new Bundle();
         args.putString("category", category);
-        TabbedNews fragment = new TabbedNews();
+        TabbedNew fragment = new TabbedNew();
         fragment.setArguments(args);
         return fragment;
     }
@@ -77,13 +74,19 @@ public class TabbedNews extends Fragment implements SwipeRefreshLayout.OnRefresh
         });
         adapter = new GeneralNewsAdapter(getContext()) {
             @Override
-            public void setFavoriteOn(String id) {
-                //Guardar Favorito aqui (logica)
+            public void setFavoriteOn(String newid) {
+                String token = sp.getString("token", "");
+                String userid = sp.getString("userid", "");
+//                viewModel.PopulateUserInfo("Bearer " + token, sp);
+                viewModel.Setfavorite("Bearer " + token, userid, newid);
             }
 
             @Override
-            public void setFavoriteOff(String id) {
-                //Aqui tambien...l o l
+            public void setFavoriteOff(String newid) {
+
+                String token = sp.getString("token", "");
+                String userid = sp.getString("userid", "");
+                viewModel.Unsetfavorite("Bearer " + token, userid, newid);
 
             }
         };
@@ -98,7 +101,7 @@ public class TabbedNews extends Fragment implements SwipeRefreshLayout.OnRefresh
             }
         });
 
-        doInBackground task = new doInBackground();
+        DoInBackground task = new DoInBackground();
         task.execute();
         return v;
 
@@ -106,17 +109,16 @@ public class TabbedNews extends Fragment implements SwipeRefreshLayout.OnRefresh
 
     @Override
     public void onRefresh() {
-        doInBackground task = new doInBackground();
+        DoInBackground task = new DoInBackground();
         task.execute();
     }
 
-    public class doInBackground extends AsyncTask<Void, Void, Void> {
+    public class DoInBackground extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... voids) {
             sp = getActivity().getSharedPreferences(getActivity().getPackageName(), MODE_PRIVATE);
             String token = sp.getString("token", "");
             viewModel.PopulateNews("Bearer " + token);
-
             return null;
         }
 

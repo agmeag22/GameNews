@@ -21,6 +21,7 @@ import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 
 import com.meag.gamenews.Database.ViewModel;
+import com.meag.gamenews.Fragments.Favorite;
 import com.meag.gamenews.Fragments.Games;
 import com.meag.gamenews.Fragments.TabbedPlayers;
 import com.meag.gamenews.Fragments.Settings;
@@ -186,7 +187,7 @@ public class MainActivityLogged extends AppCompatActivity
                             transaction.replace(R.id.content, fragment).commit();
                         }
                         if (headerList.get(groupPosition).menuName.equals(favorites_title)) {
-                            fragment = new TabbedPlayers();
+                            fragment = new Favorite();
                             transaction.replace(R.id.content, fragment).commit();
                         }
                         if (headerList.get(groupPosition).menuName.equals(logout_title)) {

@@ -69,7 +69,7 @@ public class Games extends Fragment {
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                return TabbedNews.newInstance(category);
+                return TabbedNew.newInstance(category);
             } else if (position == 1) {
                 return TabbedPlayers.newInstance(category);
             } else {

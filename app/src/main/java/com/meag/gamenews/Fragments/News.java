@@ -38,8 +38,7 @@ public class News extends Fragment implements SwipeRefreshLayout.OnRefreshListen
     SharedPreferences sp;
     private LiveData<List<New>> list;
     SwipeRefreshLayout swipeRefreshLayout;
-    SetFavoriteOnBackground setFavoriteOnBackground;
-    UnsetFavoriteOnBackground unsetFavoriteOnBackground;
+
     public News() {
         // Required empty public constructor
     }
@@ -68,14 +67,18 @@ public class News extends Fragment implements SwipeRefreshLayout.OnRefreshListen
         adapter = new GeneralNewsAdapter(getContext()) {
             @Override
             public void setFavoriteOn(String newid) {
-                setFavoriteOnBackground = new SetFavoriteOnBackground(newid);
-                setFavoriteOnBackground.execute();
+                String token = sp.getString("token", "");
+                String userid = sp.getString("userid", "");
+//                viewModel.PopulateUserInfo("Bearer " + token, sp);
+                viewModel.Setfavorite("Bearer " + token, userid, newid);
             }
 
             @Override
             public void setFavoriteOff(String newid) {
-                unsetFavoriteOnBackground = new UnsetFavoriteOnBackground(newid);
-                unsetFavoriteOnBackground.execute();
+
+                String token = sp.getString("token", "");
+                String userid = sp.getString("userid", "");
+                viewModel.Unsetfavorite("Bearer " + token, userid, newid);
 
             }
         };
@@ -90,7 +93,7 @@ public class News extends Fragment implements SwipeRefreshLayout.OnRefreshListen
             }
         });
 
-        doInBackground task = new doInBackground();
+        DoInBackground task = new DoInBackground();
         task.execute();
         return v;
 
@@ -98,17 +101,16 @@ public class News extends Fragment implements SwipeRefreshLayout.OnRefreshListen
 
     @Override
     public void onRefresh() {
-        doInBackground task = new doInBackground();
+        DoInBackground task = new DoInBackground();
         task.execute();
     }
 
-    public class doInBackground extends AsyncTask<Void, Void, Void> {
+    public class DoInBackground extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... voids) {
             sp = getActivity().getSharedPreferences(getActivity().getPackageName(), MODE_PRIVATE);
             String token = sp.getString("token", "");
             viewModel.PopulateNews("Bearer " + token);
-
             return null;
         }
 
@@ -120,53 +122,5 @@ public class News extends Fragment implements SwipeRefreshLayout.OnRefreshListen
         }
     }
 
-    public class SetFavoriteOnBackground extends AsyncTask<Void, Void, Void> {
-        String newid;
-
-        public SetFavoriteOnBackground(String newid) {
-            this.newid = newid;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            String token = sp.getString("token", "");
-            String userid = sp.getString("userid", "");
-
-            viewModel.PopulateUserInfo("Bearer " + token, sp);
-            viewModel.Setfavorite("Bearer " + token, userid, newid);
-            return null;
-        }
-
-        //For swipe functionality
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            swipeRefreshLayout.setRefreshing(false);
-            super.onPostExecute(aVoid);
-        }
-
-    }
-
-    public class UnsetFavoriteOnBackground extends AsyncTask<Void, Void, Void> {
-        String newid;
-
-        public UnsetFavoriteOnBackground(String newid) {
-            this.newid = newid;
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            String token = sp.getString("token", "");
-            String userid = sp.getString("userid", "");
-            viewModel.Unsetfavorite("Bearer " + token, userid, newid);
-            return null;
-        }
-
-        //For swipe functionality
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            swipeRefreshLayout.setRefreshing(false);
-            super.onPostExecute(aVoid);
-        }
-    }
 
 }
