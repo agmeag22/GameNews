@@ -55,4 +55,6 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
 
     implementation 'com.mikhaellopez:circularimageview:3.0.2'
+
+    implementation 'com.github.bluejamesbond:textjustify-android:2.1.6'
 }

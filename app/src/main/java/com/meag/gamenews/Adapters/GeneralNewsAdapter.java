@@ -1,18 +1,24 @@
 package com.meag.gamenews.Adapters;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.meag.gamenews.Database.New;
 import com.meag.gamenews.Database.Repository;
+import com.meag.gamenews.Fragments.SpecificNew;
 import com.meag.gamenews.R;
 
 import java.util.List;
@@ -21,6 +27,7 @@ public abstract class GeneralNewsAdapter extends RecyclerView.Adapter<GeneralNew
     private List<New> newList; // Cached copy of words
     private Context context;
     private Repository repository;
+    ;
 
     public GeneralNewsAdapter(Context context) {
         this.context = context;
@@ -52,13 +59,16 @@ public abstract class GeneralNewsAdapter extends RecyclerView.Adapter<GeneralNew
                 holder.newsDescription.setText(newList.get(position).getDescription());
             }
             if (newList.get(position).getCoverImage() != null) {
-                Glide.with(context).load(newList.get(position).getCoverImage()).apply(RequestOptions.centerCropTransform()).into(holder.newspic);
+                Glide.with(context).load(newList.get(position).getCoverImage())
+                        .apply(RequestOptions.centerCropTransform()).into(holder.newspic);
             }
             if (newList.get(position).isFavorite()) {
                 holder.newsfavoritemarker.setImageResource(android.R.drawable.star_big_on);
             } else {
                 holder.newsfavoritemarker.setImageResource(android.R.drawable.star_big_off);
             }
+
+
             holder.newsfavoritemarker.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -74,7 +84,23 @@ public abstract class GeneralNewsAdapter extends RecyclerView.Adapter<GeneralNew
 
                 }
             });
-
+//            if(newList.get(position).getTitle() != null&&newList.get(position).getDescription() != null
+//                    &&newList.get(position).getCoverImage() != null&&newList.get(position).getBody()!=null) {
+            holder.cardviewcontainer.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Fragment fragment = new SpecificNew();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("tile", newList.get(position).getTitle());
+                    bundle.putString("description", newList.get(position).getDescription());
+                    bundle.putSerializable("coverimage", newList.get(position).getCoverImage());
+                    bundle.putString("body", newList.get(position).getBody());
+                    fragment.setArguments(bundle);
+                    FragmentTransaction transaction = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.content, fragment).commit();
+                }
+            });
+//            }
         }
 
     }
@@ -93,6 +119,7 @@ public abstract class GeneralNewsAdapter extends RecyclerView.Adapter<GeneralNew
         ImageView newspic;
         ImageButton newsfavoritemarker;
         TextView newsTitle, newsDescription;
+        RelativeLayout cardviewcontainer;
 
         private GeneralNewsViewHolder(View itemView) {
             super(itemView);
@@ -100,6 +127,7 @@ public abstract class GeneralNewsAdapter extends RecyclerView.Adapter<GeneralNew
             newsfavoritemarker = itemView.findViewById(R.id.news_favorite);
             newsTitle = itemView.findViewById(R.id.title_news);
             newsDescription = itemView.findViewById(R.id.description_news);
+            cardviewcontainer = itemView.findViewById(R.id.cardviewNews);
         }
     }
 
