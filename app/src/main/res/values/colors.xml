@@ -5,8 +5,8 @@
     <color name="colorAccent">#dadadada</color>
     <color name="Secondary">#57b457</color>
     <color name="Third">#8b7d7d</color>
-    <color name="cardtextbackground">#763b3b3b</color>
+    <color name="cardtextbackground">#b33b3b3b</color>
     <color name="colorText">#dadada</color>
-    <color name="back">#c5b5b5</color>
+    <color name="back">#ec000000</color>
 
 </resources>

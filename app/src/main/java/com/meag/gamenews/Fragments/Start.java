@@ -59,7 +59,9 @@ public class Start extends Fragment {
             public void onClick(View v) {
                 Fragment fragment = new Login();
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.appstart, fragment).commit();
+                transaction.replace(R.id.appstart, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
         //click listener for sign up, and respectve fragment function
@@ -69,7 +71,9 @@ public class Start extends Fragment {
 
                 Fragment fragment = new Register();
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.appstart, fragment).commit();
+                transaction.replace(R.id.appstart, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
     }

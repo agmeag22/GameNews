@@ -44,7 +44,7 @@ public class SpecificNew extends Fragment {
         if (getArguments() != null) {
             if (getArguments().getSerializable("coverimage") != null) {
                 Glide.with(getContext()).load(getArguments().getSerializable("coverimage"))
-                        .apply(RequestOptions.centerCropTransform()).into(image);
+                        .apply(RequestOptions.centerInsideTransform()).into(image);
             }
             if (true) {
                 title.setText(getArguments().getString("description"));
@@ -61,12 +61,6 @@ public class SpecificNew extends Fragment {
         return v;
 
     }
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        FragmentManager fm = getActivity().getSupportFragmentManager();
-//        fm.popBackStack();
-//    }
 
 
 }

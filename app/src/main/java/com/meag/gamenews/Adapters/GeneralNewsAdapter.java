@@ -63,9 +63,9 @@ public abstract class GeneralNewsAdapter extends RecyclerView.Adapter<GeneralNew
                         .apply(RequestOptions.centerCropTransform()).into(holder.newspic);
             }
             if (newList.get(position).isFavorite()) {
-                holder.newsfavoritemarker.setImageResource(android.R.drawable.star_big_on);
+                holder.newsfavoritemarker.setImageResource(R.drawable.staron);
             } else {
-                holder.newsfavoritemarker.setImageResource(android.R.drawable.star_big_off);
+                holder.newsfavoritemarker.setImageResource(R.drawable.staroff);
             }
 
 
@@ -98,6 +98,8 @@ public abstract class GeneralNewsAdapter extends RecyclerView.Adapter<GeneralNew
                     fragment.setArguments(bundle);
                     FragmentTransaction transaction = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.content, fragment).commit();
+                    transaction.addToBackStack(null);
+
                 }
             });
 //            }

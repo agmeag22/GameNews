@@ -11,6 +11,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -66,10 +67,12 @@ public class MainActivityLogged extends AppCompatActivity
             snackbar.show();
         }
         if (savedInstanceState == null) {
-            Fragment fragment;
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            fragment = new News();
-            transaction.replace(R.id.content, fragment).commit();
+            Fragment fragment = new News();
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.content, fragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
         }
 
         viewModel = ViewModelProviders.of(this).get(ViewModel.class);
@@ -97,20 +100,31 @@ public class MainActivityLogged extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle(R.string.question);
-            builder.setMessage(R.string.exit_question);
-            builder.setNegativeButton(android.R.string.no, null);
+            int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
+            if (backStackEntryCount == 1) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle(R.string.question);
+                builder.setMessage(R.string.exit_question);
+                builder.setNegativeButton(android.R.string.no, null);
 
-            builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface arg0, int arg1) {
-                    MainActivityLogged.super.onBackPressed();
-                }
-            });
-            AlertDialog dialog = builder.create();
-            dialog.show();
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.GRAY));
+                builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        getSupportFragmentManager().popBackStack();
+                        MainActivityLogged.super.onBackPressed();
+                        finish();
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.GRAY));
+
+            } else {
+                getSupportFragmentManager().popBackStackImmediate();
+            }
+
         }
+
+
     }
 
 
@@ -210,22 +224,30 @@ public class MainActivityLogged extends AppCompatActivity
                     if (!headerList.get(groupPosition).hasChildren) {
                         if (headerList.get(groupPosition).menuName.equals(news_title)) {
                             fragment = new News();
-                            transaction.replace(R.id.content, fragment).commit();
+                            transaction.replace(R.id.content, fragment);
+                            transaction.addToBackStack(null);
+                            transaction.commit();
                         }
 
                         if (headerList.get(groupPosition).menuName.equals(settings_title)) {
                             fragment = new Settings();
-                            transaction.replace(R.id.content, fragment).commit();
+                            transaction.replace(R.id.content, fragment);
+                            transaction.addToBackStack(null);
+                            transaction.commit();
                         }
                         if (headerList.get(groupPosition).menuName.equals(favorites_title)) {
                             fragment = new Favorite();
-                            transaction.replace(R.id.content, fragment).commit();
+                            transaction.replace(R.id.content, fragment);
+                            transaction.addToBackStack(null);
+                            transaction.commit();
                         }
                         if (headerList.get(groupPosition).menuName.equals(logout_title)) {
                             SharedPreferences sp = getSharedPreferences(getPackageName(), MODE_PRIVATE);
                             sp.edit().putString("token", "").apply();
                             fragment = new Start();
-                            transaction.replace(R.id.drawer_layout, fragment).commit();
+                            transaction.replace(R.id.drawer_layout, fragment);
+                            transaction.addToBackStack(null);
+                            transaction.commit();
                         }
 
 
@@ -246,7 +268,9 @@ public class MainActivityLogged extends AppCompatActivity
                     String category = childList.get(headerList.get(groupPosition)).get(childPosition).menuName;
                     if (listLiveData.getValue().contains(category)) {
                         fragment = Games.newInstance(category);
-                        transaction.replace(R.id.content, fragment).commit();
+                        transaction.replace(R.id.content, fragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
 
                     }
                     onBackPressed();

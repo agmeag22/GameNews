@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:layout_margin="16dp"
+    android:layout_margin="2dp"
     tools:context=".Fragments.SpecificNew">
 
     <RelativeLayout
@@ -20,21 +20,28 @@
 
         <TextView
             android:id="@+id/specific_title"
-            style="@style/firsttextlog"
             android:layout_width="match_parent"
-            android:layout_height="81dp"
-            android:layout_alignBottom="@+id/specific_new_image"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
+            android:layout_below="@+id/specific_new_image"
             android:background="@color/cardtextbackground"
-            android:layout_alignParentLeft="true" />
+            android:textColor="@color/colorText"
+            android:textSize="16sp"
+            android:padding="16dp"
+            android:layout_alignParentLeft="true"
+            android:textAlignment="center" />
 
         <TextView
             android:id="@+id/body"
-            style="@style/firsttextlog"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/specific_title"
-            android:layout_alignParentLeft="true" />
+            android:padding="20dp"
+            android:textAlignment="gravity"
+            android:textColor="@color/colorText"
+            android:textSize="14sp"
+            android:layout_alignParentLeft="true"
+            android:background="@color/colorPrimary" />
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>
