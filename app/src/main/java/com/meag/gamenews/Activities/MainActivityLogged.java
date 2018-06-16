@@ -1,10 +1,12 @@
 package com.meag.gamenews.Activities;
 
+import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
@@ -23,10 +25,10 @@ import android.widget.ExpandableListView;
 import com.meag.gamenews.Database.ViewModel;
 import com.meag.gamenews.Fragments.Favorite;
 import com.meag.gamenews.Fragments.Games;
-import com.meag.gamenews.Fragments.TabbedPlayers;
 import com.meag.gamenews.Fragments.Settings;
 import com.meag.gamenews.Menu.MenuModel;
 import com.meag.gamenews.Fragments.News;
+import com.meag.gamenews.Methods;
 import com.meag.gamenews.R;
 import com.meag.gamenews.Fragments.Start;
 
@@ -34,21 +36,31 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static java.security.AccessController.getContext;
+
 public class MainActivityLogged extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    ExpandableListAdapter expandableListAdapter;
-    ExpandableListView expandableListView;
-    List<MenuModel> headerList = new ArrayList<>();
-    HashMap<MenuModel, List<MenuModel>> childList = new HashMap<>();
-    String news_title, games_title, settings_title, favorites_title, logout_title;
-    ViewModel viewModel;
+    private ExpandableListAdapter expandableListAdapter;
+    private ExpandableListView expandableListView;
+    private List<MenuModel> headerList = new ArrayList<>();
+    private HashMap<MenuModel, List<MenuModel>> childList = new HashMap<>();
+    private String news_title, games_title, settings_title, favorites_title, logout_title;
+    private ViewModel viewModel;
     private List<MenuModel> childModelsList;
     private LiveData<List<String>> listLiveData;
+    private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        Methods methods = new Methods();
+        if (!methods.isOnline(getApplication())) {
+            Snackbar snackbar = Snackbar
+                    .make(drawerLayout, R.string.snackbar_nointernet, Snackbar.LENGTH_LONG);
+            snackbar.show();
+        }
         if (savedInstanceState == null) {
             Fragment fragment;
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

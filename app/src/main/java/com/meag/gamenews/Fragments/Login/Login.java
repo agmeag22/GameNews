@@ -2,10 +2,14 @@ package com.meag.gamenews.Fragments.Login;
 
 import android.app.Application;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -14,7 +18,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.meag.gamenews.Database.Repository;
 import com.meag.gamenews.Database.ViewModel;
@@ -22,6 +28,7 @@ import com.meag.gamenews.ForAPI.APIService;
 import com.meag.gamenews.ForAPI.API_Utils;
 import com.meag.gamenews.ForAPI.POJOs.Token_API;
 import com.meag.gamenews.Activities.MainActivityLogged;
+import com.meag.gamenews.Methods;
 import com.meag.gamenews.R;
 
 import java.io.IOException;
@@ -43,6 +50,7 @@ public class Login extends Fragment {
     private Application application;
     private ViewModel viewModel;
     private doInBackground login;
+    private LinearLayout linearLayout;
 
     public Login() {
         // Required empty public constructor
@@ -53,10 +61,18 @@ public class Login extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.login, container, false);
+        findviews(v);
+        Methods methods = new Methods();
+
+        if (!methods.isOnline(getActivity().getApplication())) {
+            Snackbar snackbar = Snackbar
+                    .make(linearLayout, R.string.snackbar_nointernet, Snackbar.LENGTH_LONG);
+            snackbar.show();
+//            Toast.makeText(getActivity(),R.string.snackbar_nointernet, Toast.LENGTH_SHORT).show();
+        }
         sp = getActivity().getSharedPreferences("com.meag.gamenews", MODE_PRIVATE);
         apiservice = API_Utils.getAPIService(getContext());
         viewModel = ViewModelProviders.of(getActivity()).get(ViewModel.class);
-        findviews(v);
         clicklisteners();
         return v;
     }
@@ -67,6 +83,7 @@ public class Login extends Fragment {
         sign_in_button = v.findViewById(R.id.sign_in_button);
         username = v.findViewById(R.id.usernamelogin);
         password = v.findViewById(R.id.userPasswordlogin);
+        linearLayout = v.findViewById(R.id.login);
     }
 
     //CLICK LISTENERS FOR BUTTONS
@@ -120,5 +137,7 @@ public class Login extends Fragment {
         }
 
     }
+
+
 }
 

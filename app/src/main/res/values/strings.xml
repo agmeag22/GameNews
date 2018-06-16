@@ -39,5 +39,6 @@
     <string name="internal_error">Ups, Something went wrong...</string>
     <string name="api_error">Ups, server not found...</string>
     <string name="success">Nice!, Everything went like planned!</string>
+    <string name="snackbar_nointernet">Hey no changing data!, No internet connection!</string>
 
 </resources>

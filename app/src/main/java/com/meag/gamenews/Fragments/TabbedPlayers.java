@@ -1,6 +1,7 @@
 package com.meag.gamenews.Fragments;
 
 
+import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -8,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,10 +17,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.meag.gamenews.Adapters.PlayerAdapter;
 import com.meag.gamenews.Database.Player;
 import com.meag.gamenews.Database.ViewModel;
+import com.meag.gamenews.Methods;
 import com.meag.gamenews.R;
 
 import java.util.List;
@@ -39,6 +43,7 @@ public class TabbedPlayers extends Fragment implements SwipeRefreshLayout.OnRefr
     private LiveData<List<Player>> list;
     SwipeRefreshLayout swipeRefreshLayout;
     String category;
+    private SwipeRefreshLayout swipeRefreshLayout1;
 
     public TabbedPlayers() {
         // Required empty public constructor
@@ -58,11 +63,18 @@ public class TabbedPlayers extends Fragment implements SwipeRefreshLayout.OnRefr
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.container, container, false);
-
+        swipeRefreshLayout = v.findViewById(R.id.swipe);
+        Methods methods = new Methods();
+        if (!methods.isOnline(getActivity().getApplication())) {
+            Snackbar snackbar = Snackbar
+                    .make(swipeRefreshLayout1, R.string.snackbar_nointernet, Snackbar.LENGTH_LONG);
+            snackbar.show();
+//            Toast.makeText(getActivity(),R.string.snackbar_nointernet, Toast.LENGTH_SHORT).show();
+        }
         category = getArguments() != null ? getArguments().getString("category") : "";
         viewModel = ViewModelProviders.of(this).get(ViewModel.class);
         recyclerView = v.findViewById(R.id.recycler_view);
-        swipeRefreshLayout = v.findViewById(R.id.swipe);
+
         swipeRefreshLayout.setOnRefreshListener(this);
         linearLayoutManager = new LinearLayoutManager(getContext());
         adapter = new PlayerAdapter(getContext());

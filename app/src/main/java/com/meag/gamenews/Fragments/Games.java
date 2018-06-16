@@ -1,8 +1,10 @@
 package com.meag.gamenews.Fragments;
 
 
+import android.app.Application;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,7 +13,9 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import com.meag.gamenews.Methods;
 import com.meag.gamenews.R;
 
 /**
@@ -20,12 +24,14 @@ import com.meag.gamenews.R;
 public class Games extends Fragment {
 
     String category;
+    private LinearLayout linearLayout;
 
     public Games() {
         // Required empty public constructor
     }
 
     public static Games newInstance(String category) {
+
 
         Bundle args = new Bundle();
         args.putString("category", category);
@@ -39,6 +45,14 @@ public class Games extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.gameinterface, container, false);
+        linearLayout = v.findViewById(R.id.gameinterface);
+        Methods methods = new Methods();
+        if (!methods.isOnline(getActivity().getApplication())) {
+            Snackbar snackbar = Snackbar
+                    .make(linearLayout, R.string.snackbar_nointernet, Snackbar.LENGTH_LONG);
+            snackbar.show();
+            //Toast.makeText(getActivity(),R.string.snackbar_nointernet, Toast.LENGTH_SHORT).show();
+        }
         category = getArguments() != null ? getArguments().getString("category") : "";
 
         ViewPager viewPager = (ViewPager) v.findViewById(R.id.viewpager);

@@ -1,16 +1,20 @@
 package com.meag.gamenews.Fragments;
 
 
+import android.app.Application;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.meag.gamenews.Fragments.Login.Login;
 import com.meag.gamenews.Fragments.Login.Register;
+import com.meag.gamenews.Methods;
 import com.meag.gamenews.R;
 
 /**
@@ -18,6 +22,7 @@ import com.meag.gamenews.R;
  */
 public class Start extends Fragment {
     LinearLayout signup, signin;
+    private RelativeLayout relativeLayout;
 
     public Start() {
         // Required empty public constructor
@@ -29,11 +34,19 @@ public class Start extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.appstart, container, false);
         findviews(v);
+        Methods methods = new Methods();
+        if (!methods.isOnline(getActivity().getApplication())) {
+            Snackbar snackbar = Snackbar
+                    .make(relativeLayout, R.string.snackbar_nointernet, Snackbar.LENGTH_LONG);
+            snackbar.show();
+            //Toast.makeText(getActivity(),R.string.snackbar_nointernet, Toast.LENGTH_SHORT).show();
+        }
         onclicks();
         return v;
     }
 
     public void findviews(View v) {
+        relativeLayout = v.findViewById(R.id.appstart);
         signin = v.findViewById(R.id.signin_option);
         signup = v.findViewById(R.id.signup_option);
     }
