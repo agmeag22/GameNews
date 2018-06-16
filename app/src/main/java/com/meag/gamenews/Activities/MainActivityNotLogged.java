@@ -1,11 +1,15 @@
 package com.meag.gamenews.Activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -51,5 +55,35 @@ public class MainActivityNotLogged extends AppCompatActivity {
         }
 
     }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(R.string.question);
+        builder.setMessage(R.string.exit_question);
+        builder.setNegativeButton(android.R.string.no, null);
+
+        builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+                MainActivityNotLogged.super.onBackPressed();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.YELLOW));
+        dialog.show();
+    }
+
+
+//        new AlertDialog.Builder(this)
+//                .setTitle(R.string.question)
+//                .setMessage(R.string.exit_question)
+//                .setNegativeButton(android.R.string.no, null)
+//                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+//
+//                    public void onClick(DialogInterface arg0, int arg1) {
+//                        MainActivityNotLogged.super.onBackPressed();
+//                    }
+//                }).create().show();
+
 
 }

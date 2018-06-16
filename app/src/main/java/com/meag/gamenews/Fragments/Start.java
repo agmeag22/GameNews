@@ -1,16 +1,16 @@
 package com.meag.gamenews.Fragments;
 
 
-import android.app.Application;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.meag.gamenews.Fragments.Login.Login;
 import com.meag.gamenews.Fragments.Login.Register;
@@ -21,8 +21,8 @@ import com.meag.gamenews.R;
  * A simple {@link Fragment} subclass.
  */
 public class Start extends Fragment {
-    LinearLayout signup, signin;
-    private RelativeLayout relativeLayout;
+    private LinearLayout signup, signin;
+    private DrawerLayout drawerLayout;
 
     public Start() {
         // Required empty public constructor
@@ -37,16 +37,16 @@ public class Start extends Fragment {
         Methods methods = new Methods();
         if (!methods.isOnline(getActivity().getApplication())) {
             Snackbar snackbar = Snackbar
-                    .make(relativeLayout, R.string.snackbar_nointernet, Snackbar.LENGTH_LONG);
+                    .make(getActivity().findViewById(android.R.id.content), R.string.snackbar_nointernet, Snackbar.LENGTH_LONG);
             snackbar.show();
-            //Toast.makeText(getActivity(),R.string.snackbar_nointernet, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(),R.string.snackbar_nointernet, Toast.LENGTH_SHORT).show();
         }
         onclicks();
         return v;
     }
 
     public void findviews(View v) {
-        relativeLayout = v.findViewById(R.id.appstart);
+        drawerLayout = v.findViewById(R.id.drawer_layout);
         signin = v.findViewById(R.id.signin_option);
         signup = v.findViewById(R.id.signup_option);
     }

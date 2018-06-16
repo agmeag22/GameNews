@@ -2,17 +2,15 @@ package com.meag.gamenews.Fragments.Login;
 
 import android.app.Application;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.meag.gamenews.Activities.MainActivityNotLogged;
 import com.meag.gamenews.Database.Repository;
 import com.meag.gamenews.Database.ViewModel;
 import com.meag.gamenews.ForAPI.APIService;
@@ -32,10 +31,6 @@ import com.meag.gamenews.Methods;
 import com.meag.gamenews.R;
 
 import java.io.IOException;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -66,7 +61,7 @@ public class Login extends Fragment {
 
         if (!methods.isOnline(getActivity().getApplication())) {
             Snackbar snackbar = Snackbar
-                    .make(linearLayout, R.string.snackbar_nointernet, Snackbar.LENGTH_LONG);
+                    .make(getActivity().findViewById(android.R.id.content), R.string.snackbar_nointernet, Snackbar.LENGTH_LONG);
             snackbar.show();
 //            Toast.makeText(getActivity(),R.string.snackbar_nointernet, Toast.LENGTH_SHORT).show();
         }
@@ -76,6 +71,7 @@ public class Login extends Fragment {
         clicklisteners();
         return v;
     }
+
 
     //FIND VIEWS ALL BY ID
     public void findviews(View v) {

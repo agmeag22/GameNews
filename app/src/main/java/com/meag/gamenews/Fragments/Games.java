@@ -49,9 +49,9 @@ public class Games extends Fragment {
         Methods methods = new Methods();
         if (!methods.isOnline(getActivity().getApplication())) {
             Snackbar snackbar = Snackbar
-                    .make(linearLayout, R.string.snackbar_nointernet, Snackbar.LENGTH_LONG);
+                    .make(getActivity().findViewById(android.R.id.content), R.string.snackbar_nointernet, Snackbar.LENGTH_LONG);
             snackbar.show();
-            //Toast.makeText(getActivity(),R.string.snackbar_nointernet, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(),R.string.snackbar_nointernet, Toast.LENGTH_SHORT).show();
         }
         category = getArguments() != null ? getArguments().getString("category") : "";
 
@@ -84,8 +84,6 @@ public class Games extends Fragment {
         public Fragment getItem(int position) {
             if (position == 0) {
                 return TabbedNew.newInstance(category);
-            } else if (position == 1) {
-                return TabbedPlayers.newInstance(category);
             } else {
                 return TabbedPlayers.newInstance(category);
             }
@@ -94,7 +92,7 @@ public class Games extends Fragment {
         // This determines the number of tabs
         @Override
         public int getCount() {
-            return 3;
+            return 2;
         }
 
         // This determines the title for each tab
@@ -106,8 +104,6 @@ public class Games extends Fragment {
                     return mContext.getString(R.string.tab_news);
                 case 1:
                     return mContext.getString(R.string.tab_top_players);
-                case 2:
-                    return mContext.getString(R.string.tab_preview);
                 default:
                     return null;
             }

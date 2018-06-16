@@ -65,9 +65,9 @@ public class TabbedNew extends Fragment implements SwipeRefreshLayout.OnRefreshL
         Methods methods = new Methods();
         if (!methods.isOnline(getActivity().getApplication())) {
             Snackbar snackbar = Snackbar
-                    .make(swipeRefreshLayout, R.string.snackbar_nointernet, Snackbar.LENGTH_LONG);
+                    .make(getActivity().findViewById(android.R.id.content), R.string.snackbar_nointernet, Snackbar.LENGTH_LONG);
             snackbar.show();
-            //Toast.makeText(getActivity(),R.string.snackbar_nointernet, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(),R.string.snackbar_nointernet, Toast.LENGTH_SHORT).show();
         }
         category = getArguments() != null ? getArguments().getString("category") : "";
         viewModel = ViewModelProviders.of(this).get(ViewModel.class);

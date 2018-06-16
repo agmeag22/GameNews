@@ -40,5 +40,7 @@
     <string name="api_error">Ups, server not found...</string>
     <string name="success">Nice!, Everything went like planned!</string>
     <string name="snackbar_nointernet">Hey no changing data!, No internet connection!</string>
+    <string name="question">Leaving early?</string>
+    <string name="exit_question">Are you sure?</string>
 
 </resources>

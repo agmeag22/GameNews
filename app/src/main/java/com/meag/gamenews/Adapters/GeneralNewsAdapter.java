@@ -38,6 +38,7 @@ public abstract class GeneralNewsAdapter extends RecyclerView.Adapter<GeneralNew
     @Override
     public GeneralNewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_cardview, parent, false);
+
         return new GeneralNewsViewHolder(itemView);
     }
 
@@ -100,6 +101,10 @@ public abstract class GeneralNewsAdapter extends RecyclerView.Adapter<GeneralNew
             newsTitle = itemView.findViewById(R.id.title_news);
             newsDescription = itemView.findViewById(R.id.description_news);
         }
+    }
+
+    private void SetupSearch() {
+
     }
 
     @Override

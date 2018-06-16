@@ -12,4 +12,9 @@ public class Methods {
         NetworkInfo netInfo = connectivityManager.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
+
+
+    public void SetupSearch() {
+
+    }
 }

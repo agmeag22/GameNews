@@ -63,7 +63,7 @@ public class Favorite extends Fragment implements SwipeRefreshLayout.OnRefreshLi
         Methods methods = new Methods();
         if (!methods.isOnline(getActivity().getApplication())) {
             Snackbar snackbar = Snackbar
-                    .make(swipeRefreshLayout, R.string.snackbar_nointernet, Snackbar.LENGTH_LONG);
+                    .make(getActivity().findViewById(android.R.id.content), R.string.snackbar_nointernet, Snackbar.LENGTH_LONG);
             snackbar.show();
 //            Toast.makeText(getActivity(),R.string.snackbar_nointernet, Toast.LENGTH_SHORT).show();
         }

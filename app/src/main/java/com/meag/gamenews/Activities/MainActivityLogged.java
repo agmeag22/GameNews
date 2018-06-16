@@ -4,7 +4,10 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
@@ -14,6 +17,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -93,9 +97,23 @@ public class MainActivityLogged extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle(R.string.question);
+            builder.setMessage(R.string.exit_question);
+            builder.setNegativeButton(android.R.string.no, null);
+
+            builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface arg0, int arg1) {
+                    MainActivityLogged.super.onBackPressed();
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.GRAY));
         }
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -153,20 +171,21 @@ public class MainActivityLogged extends AppCompatActivity
             }
         });
 
-
         if (menuModel.hasChildren) {
             childList.put(menuModel, childModelsList);
-        }
-        menuModel = new MenuModel(settings_title, false, true); //Menu of Java Tutorials
-        headerList.add(menuModel);
-        if (!menuModel.hasChildren) {
-            childList.put(menuModel, null);
         }
         menuModel = new MenuModel(favorites_title, false, true); //Menu of Java Tutorials
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
         }
+
+        menuModel = new MenuModel(settings_title, false, true); //Menu of Java Tutorials
+        headerList.add(menuModel);
+        if (!menuModel.hasChildren) {
+            childList.put(menuModel, null);
+        }
+
         menuModel = new MenuModel(logout_title, false, true); //Menu of Java Tutorials
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
