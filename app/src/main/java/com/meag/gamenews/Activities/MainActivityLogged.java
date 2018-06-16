@@ -1,6 +1,5 @@
 package com.meag.gamenews.Activities;
 
-import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -30,7 +29,7 @@ import android.widget.ExpandableListView;
 import com.meag.gamenews.Database.ViewModel;
 import com.meag.gamenews.Fragments.Favorite;
 import com.meag.gamenews.Fragments.Games;
-import com.meag.gamenews.Fragments.Settings;
+import com.meag.gamenews.Fragments.NewPasword;
 import com.meag.gamenews.Menu.MenuModel;
 import com.meag.gamenews.Fragments.News;
 import com.meag.gamenews.Methods;
@@ -40,8 +39,6 @@ import com.meag.gamenews.Fragments.Start;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import static java.security.AccessController.getContext;
 
 public class MainActivityLogged extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -230,7 +227,7 @@ public class MainActivityLogged extends AppCompatActivity
                         }
 
                         if (headerList.get(groupPosition).menuName.equals(settings_title)) {
-                            fragment = new Settings();
+                            fragment = new NewPasword();
                             transaction.replace(R.id.content, fragment);
                             transaction.addToBackStack(null);
                             transaction.commit();

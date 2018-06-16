@@ -42,5 +42,16 @@
     <string name="snackbar_nointernet">Hey no changing data!, No internet connection!</string>
     <string name="question">Leaving early?</string>
     <string name="exit_question">Are you sure?</string>
+    <string name="save_password">Save</string>
+    <string name="new_password">New Password</string>
+    <string name="current_password">Current password</string>
+    <string name="update_password_text">Update your password</string>
+    <string name="please_fill_the_following_fields_to_update_your_password">Please fill the following fields to update your password</string>
+    <string name="confirm_new_password">Confirm new password</string>
+    <string name="password_updated">Password updated</string>
+    <string name="password_not_match">The old password not match</string>
+    <string name="password_notmatch">Confirm password not match</string>
+    <string name="is_empty">Please fill the field</string>
+    <string name="error">Error</string>
 
 </resources>

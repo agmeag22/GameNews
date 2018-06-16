@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
-    tools:context=".Fragments.Settings"
-    android:id="@+id/layoutsettings">
+    android:id="@+id/layoutregister">
 
 
     <ScrollView
@@ -26,7 +25,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="You don't like something?"
+                android:text="@string/update_password_text"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="5dp"
@@ -36,7 +35,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/just_change_it"
+                android:text="@string/please_fill_the_following_fields_to_update_your_password"
                 android:textSize="12sp"
                 android:layout_marginBottom="30dp"
                 style="@style/firsttextlog" />
@@ -44,24 +43,23 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:hint="@string/username"
+                android:hint="@string/current_password"
                 android:background="@drawable/rounded_white"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"
-                android:drawableLeft="@drawable/ic_user_icon"
+                android:drawableLeft="@drawable/ic_pass_icon"
                 android:textSize="14sp"
                 android:drawablePadding="5dp"
                 android:paddingStart="10dp"
-                android:id="@+id/userEmail"
+                android:id="@+id/current_password"
                 android:layout_marginBottom="10dp"
-                android:paddingLeft="10dp"
-                android:drawableStart="@drawable/ic_user_icon" />
+                android:paddingLeft="10dp" />
 
             <EditText
-                android:id="@+id/userPasswordRegister"
+                android:id="@+id/new_password"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:hint="@string/password"
+                android:hint="@string/new_password"
                 android:background="@drawable/rounded_white"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"
@@ -76,10 +74,10 @@
                 android:paddingLeft="10dp" />
 
             <EditText
-                android:id="@+id/userCPasswordRegister"
+                android:id="@+id/confirm_new_password"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:hint="@string/confirm_password"
+                android:hint="@string/confirm_new_password"
                 android:background="@drawable/rounded_white"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"
@@ -91,13 +89,12 @@
 
                 android:layout_marginBottom="10dp"
                 android:paddingLeft="10dp" />
-
-
             <Button
+                android:id="@+id/save_password"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:textColor="@android:color/white"
-                android:text="@string/update_btn"
+                android:text="@string/save_password"
                 android:textStyle="normal"
                 android:background="@drawable/register_button"
                 android:layout_gravity="center"
@@ -106,6 +103,31 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp" />
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="15dp"
+                android:layout_gravity="center">
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/already_registered"-->
+
+                    <!--/>-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/sign_in_access"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="@string/sign_in_text"-->
+                    <!--android:paddingStart="5dp"-->
+                    <!--android:paddingEnd="5dp"-->
+                    <!--android:textStyle="bold"-->
+                    <!--android:textColor="#334fff" />-->
+
+            </LinearLayout>
 
         </LinearLayout>
 
