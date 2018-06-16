@@ -26,6 +26,10 @@ public class ViewModel extends AndroidViewModel {
         return repository.getNewsByCategory(category);
     }
 
+    public LiveData<List<New>> getNewsByTitleLike(String title) {
+        return repository.getNewsByTitleLike(title);
+    }
+
     public LiveData<List<Player>> getPlayersByCategory(String category) {
         return repository.getPlayersByCategory(category);
     }

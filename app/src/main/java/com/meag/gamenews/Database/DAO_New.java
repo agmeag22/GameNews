@@ -33,6 +33,9 @@ public interface DAO_New {
     @Query("SELECT * from new WHERE game=:category ORDER BY created_date DESC")
     LiveData<List<New>> getNewsByCategory(String category);
 
+    @Query("SELECT * from new WHERE title LIKE :title ORDER BY created_date DESC")
+    LiveData<List<New>> getNewsByTitleLike(String title);
+
     @Query("SELECT game from new GROUP BY game ORDER BY created_date DESC")
     LiveData<List<String>> getCategories();
 

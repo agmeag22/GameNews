@@ -110,10 +110,10 @@ public class Login extends Fragment {
 
     //FUNCTION TO OBTAIN A RESPONSE FROM LOGIN + SAVING THE STATE OF THE TOKEN
 
-    public class doInBackground extends AsyncTask<Void, Void, Void> {
+    public class doInBackground extends AsyncTask<Void, Void, Integer> {
 
         @Override
-        protected Void doInBackground(Void... voids) {
+        protected Integer doInBackground(Void... voids) {
             try {
 
                 if (username != null && password != null) {
@@ -123,15 +123,22 @@ public class Login extends Fragment {
                         viewModel.PopulateUserInfo("Bearer " + token.getToken(), sp);
                         Intent intent = new Intent(getContext(), MainActivityLogged.class);
                         startActivity(intent);
+                        return R.string.success;
                     }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
+               return R.string.api_error;
             }
 
-            return null;
+            return R.string.internal_error;
         }
 
+        @Override
+        protected void onPostExecute(Integer integer) {
+            Toast.makeText(getContext(), integer, Toast.LENGTH_SHORT).show();
+            super.onPostExecute(integer);
+        }
     }
 
 

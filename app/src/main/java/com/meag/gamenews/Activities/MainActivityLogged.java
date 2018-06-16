@@ -19,7 +19,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,6 +30,7 @@ import android.widget.ExpandableListView;
 
 import com.meag.gamenews.Database.ViewModel;
 import com.meag.gamenews.Fragments.Favorite;
+import com.meag.gamenews.Fragments.FilteredNew;
 import com.meag.gamenews.Fragments.Games;
 import com.meag.gamenews.Fragments.NewPasword;
 import com.meag.gamenews.Menu.MenuModel;
@@ -51,6 +54,9 @@ public class MainActivityLogged extends AppCompatActivity
     private List<MenuModel> childModelsList;
     private LiveData<List<String>> listLiveData;
     private DrawerLayout drawerLayout;
+    private SearchView searchView;
+    private FilteredNew newFilter;
+    private String query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +136,54 @@ public class MainActivityLogged extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        MenuItem searchItem = menu.findItem(R.id.search);
+
+        searchView = (SearchView) searchItem.getActionView();
+
+        MenuItem.OnActionExpandListener expandListener = new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                removeFilter();
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                if (query != null) {
+                    searchView.setQuery(query, true);
+                    newFilter =  FilteredNew.newInstance(query);
+                } else {
+                    newFilter = FilteredNew.newInstance("");
+                }
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.content, newFilter);
+                transaction.addToBackStack(null);
+                transaction.commit();
+                return true;
+            }
+        };
+        searchItem.setOnActionExpandListener(expandListener);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+        @Override
+        public boolean onQueryTextChange(String query) {
+            if (newFilter != null) {
+                newFilter.updateFilter(query);
+            }
+            return false;
+        }
+    });
+        if (!TextUtils.isEmpty(query)) {
+
+        searchItem.expandActionView();
+        searchView.setQuery(query, true);
+        query = null;
+        searchView.clearFocus();
+    }
         return true;
     }
 
@@ -284,6 +338,31 @@ public class MainActivityLogged extends AppCompatActivity
         settings_title = getResources().getString(R.string.settings_menu_title);
         favorites_title = getResources().getString(R.string.favorites_menu_title);
         logout_title = getResources().getString(R.string.logout);
+    }
+
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState != null) {
+            query = savedInstanceState.getString("filter");
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        if (newFilter != null) {
+           removeFilter();
+        }
+        query = searchView.getQuery().toString();
+        outState.putString("filter", query);
+        super.onSaveInstanceState(outState);
+
+    }
+
+    public void removeFilter(){
+        getSupportFragmentManager().popBackStack();
+        newFilter = null;
     }
 }
 

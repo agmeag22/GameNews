@@ -71,6 +71,9 @@ public class Repository {
     public LiveData<List<New>> getNewsByCategory(String category) {
         return mdao_new.getNewsByCategory(category);
     }
+    public LiveData<List<New>> getNewsByTitleLike(String title) {
+        return mdao_new.getNewsByTitleLike(title);
+    }
 
     public LiveData<List<Player>> getPlayersByCategory(String category) {
         return mdao_player.getPlayersByCategory(category);
