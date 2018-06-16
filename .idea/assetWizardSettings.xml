@@ -64,7 +64,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="trimmed" value="true" />
+                                                <entry key="scalingPercent" value="69" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -77,6 +77,8 @@
                                       <entry key="backgroundColor" value="fdfdff" />
                                       <entry key="backgroundImage" value="C:\Users\MiguelAviles\Downloads\ic_launcher\web_hi_res_512.png" />
                                       <entry key="foregroundImage" value="C:\Users\MiguelAviles\Downloads\ic_launcher\web_hi_res_512.png" />
+                                      <entry key="generateLegacyIcon" value="false" />
+                                      <entry key="generateWebIcon" value="false" />
                                       <entry key="showGrid" value="true" />
                                     </map>
                                   </option>
