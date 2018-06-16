@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GameNews</string>
+    <string name="action_settings">Ajustes</string>
+    <string name="news_title">Noticias</string>
+    <string name="games_menu_title">Videojuegos</string>
+    <string name="settings_menu_title">Ajustes</string>
+    <string name="favorites_menu_title">Favoritos</string>
+    <string name="search">Buscar</string>
+    <string name="get_started">Solo unos detalles antes de empezar...</string>
+    <string name="get_startedword">Empecemos</string>
+    <string name="sign_in_text"><u>Iniciar sesión</u></string>
+    <string name="password">Contraseña</string>
+    <string name="username">Nombre de usuario</string>
+    <string name="sign_in_comment">Solo unos detalles antes de empezar...</string>
+    <string name="sign_in_hithere">Hey!, ¿Preparado o preparada?</string>
+    <string name="confirm_password">Confirmar contraseña</string>
+    <string name="register_text"><u>Registrarse</u></string>
+    <string name="register">Registrate</string>
+    <string name="logout">Cerrar sesión</string>
+    <string name="already_registered">Ya estas registrado/a</string>
+    <string name="sign_in">Iniciar Sesión</string>
+    <string name="not_registered_yet">¿Aun no estas registrado/a?</string>
+    <string name="tab_news">Noticias</string>
+    <string name="tab_top_players">Mejores Jugadores</string>
+    <string name="just_change_it">¡Cambialo!</string>
+    <string name="internal_error">Ups, Algo ha salido mal...</string>
+    <string name="api_error">Ups, no hay comunicación...</string>
+    <string name="success">¡Justo como fue planeado!</string>
+    <string name="snackbar_nointernet">Hey, no hay internet!, ¡No cambies algo!</string>
+    <string name="question">¿Quieres salir?</string>
+    <string name="exit_question">¿Seguro/a?</string>
+    <string name="save_password">Guardar</string>
+    <string name="new_password">Nueva contraseña</string>
+    <string name="current_password">Contraseña actual</string>
+    <string name="update_password_text">Actualiza tu contraseña</string>
+    <string name="please_fill_the_following_fields_to_update_your_password">Por favor, llena todos los campos para realizar tu cambio</string>
+    <string name="confirm_new_password">Confirmar nueva contraseña</string>
+    <string name="password_updated">Contraseña actualizada</string>
+    <string name="password_not_match">La contraseña previa no es valida</string>
+    <string name="password_notmatch">La contraseña nueva no es valida</string>
+    <string name="is_empty">Por favor llena todos el campos</string>
+    <string name="error">Error</string>
+</resources>

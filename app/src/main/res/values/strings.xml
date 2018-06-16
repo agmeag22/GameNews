@@ -8,9 +8,6 @@
     <string name="action_settings">Settings</string>
     <string name="news_title">News</string>
     <string name="games_menu_title">Games</string>
-    <string name="lol_menu_title">League of legends</string>
-    <string name="dota_menu_title">Dota</string>
-    <string name="csgo_menu_title">CS GO</string>
     <string name="settings_menu_title">Settings</string>
     <string name="favorites_menu_title">Favorites</string>
     <string name="search">search</string>
@@ -23,18 +20,16 @@
     <string name="sign_in_comment">Just a few details before you get logged</string>
     <string name="sign_in_hithere">Hi there, ready to log in?</string>
     <string name="confirm_password">Confirm Password</string>
-    <string name="register"><u>register</u></string>
+    <string name="register_text"><u>Register</u></string>
+    <string name="register">Register</string>
     <string name="logout">Logout</string>
     <string name="already_registered">Already registered?,</string>
-    <string name="sign_in">sign in</string>
+    <string name="sign_in">Sign In</string>
     <string name="not_registered_yet">Not registered yet?,</string>
     <string name="tab_news">News</string>
     <string name="tab_top_players">Top Players</string>
     <string name="tab_preview">Preview</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="update_btn">Update</string>
     <string name="just_change_it">Just change it!</string>
     <string name="internal_error">Ups, Something went wrong...</string>
     <string name="api_error">Ups, server not found...</string>

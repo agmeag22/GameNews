@@ -58,6 +58,7 @@ public class MainActivityNotLogged extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.question);
         builder.setMessage(R.string.exit_question);
@@ -65,11 +66,12 @@ public class MainActivityNotLogged extends AppCompatActivity {
 
         builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface arg0, int arg1) {
+                getSupportFragmentManager().popBackStack();
                 MainActivityNotLogged.super.onBackPressed();
             }
         });
         AlertDialog dialog = builder.create();
-        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.YELLOW));
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.GRAY));
         dialog.show();
     }
 

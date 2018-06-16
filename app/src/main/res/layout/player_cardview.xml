@@ -3,10 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
-    android:layout_marginBottom="5dp"
-    app:cardBackgroundColor="@color/Secondary"
+    android:layout_marginTop="5dp"
+
+    app:cardBackgroundColor="@color/cardview_shadow_start_color"
     app:cardCornerRadius="10dp">
 
     <LinearLayout
@@ -38,7 +40,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
                 android:textSize="15sp"
-                android:textStyle="italic" />
+                android:textStyle="italic"
+                android:textColor="@android:color/white"/>
 
             <!--<TextView-->
             <!--android:id="@+id/player_info"-->

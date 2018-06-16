@@ -1,5 +1,6 @@
 package com.meag.gamenews.Activities;
 
+import android.annotation.SuppressLint;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -27,6 +28,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 
 import com.meag.gamenews.Database.ViewModel;
 import com.meag.gamenews.Fragments.Favorite;
@@ -57,7 +59,9 @@ public class MainActivityLogged extends AppCompatActivity
     private SearchView searchView;
     private FilteredNew newFilter;
     private String query;
-
+    private SharedPreferences sharedPreferences;
+    private TextView usernametext;
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +73,7 @@ public class MainActivityLogged extends AppCompatActivity
                     .make(drawerLayout, R.string.snackbar_nointernet, Snackbar.LENGTH_LONG);
             snackbar.show();
         }
+
         if (savedInstanceState == null) {
             Fragment fragment = new News();
             FragmentManager fragmentManager = getSupportFragmentManager();
@@ -88,6 +93,12 @@ public class MainActivityLogged extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        sharedPreferences = getSharedPreferences(getPackageName(), MODE_PRIVATE);
+        String username = sharedPreferences.getString("username", "");
+        navigationView.setNavigationItemSelectedListener(this);
+        View header=navigationView.getHeaderView(0);
+        usernametext= (TextView)header.findViewById(R.id.username);
+        usernametext.setText(username);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -214,6 +225,7 @@ public class MainActivityLogged extends AppCompatActivity
 
     //Function to add any menu option and submenu entries on a expandable list
     private void prepareMenuData() {
+
         get_menu_titles();
         MenuModel menuModel = new MenuModel(news_title, false, true); //Menu of Java Tutorials
         headerList.add(menuModel);
@@ -295,6 +307,7 @@ public class MainActivityLogged extends AppCompatActivity
                         if (headerList.get(groupPosition).menuName.equals(logout_title)) {
                             SharedPreferences sp = getSharedPreferences(getPackageName(), MODE_PRIVATE);
                             sp.edit().putString("token", "").apply();
+                            getSupportFragmentManager().popBackStack();
                             fragment = new Start();
                             transaction.replace(R.id.drawer_layout, fragment);
                             transaction.addToBackStack(null);

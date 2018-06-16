@@ -105,7 +105,7 @@
                     android:id="@+id/register_access"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/register"
+                    android:text="@string/register_text"
                     android:paddingStart="5dp"
                     android:paddingEnd="5dp"
                     android:textStyle="bold"

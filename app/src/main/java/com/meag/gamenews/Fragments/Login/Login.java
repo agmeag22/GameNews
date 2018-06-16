@@ -27,6 +27,7 @@ import com.meag.gamenews.ForAPI.APIService;
 import com.meag.gamenews.ForAPI.API_Utils;
 import com.meag.gamenews.ForAPI.POJOs.Token_API;
 import com.meag.gamenews.Activities.MainActivityLogged;
+import com.meag.gamenews.ForAPI.POJOs.User_API;
 import com.meag.gamenews.Methods;
 import com.meag.gamenews.R;
 
@@ -119,6 +120,7 @@ public class Login extends Fragment {
                 if (username != null && password != null) {
                     Token_API token = apiservice.login(username.getText().toString(), password.getText().toString()).execute().body();
                     if (token != null) {
+                        sp.edit().putString("username",username.getText().toString()).apply();
                         sp.edit().putString("token", token.getToken()).apply();
                         viewModel.PopulateUserInfo("Bearer " + token.getToken(), sp);
                         Intent intent = new Intent(getContext(), MainActivityLogged.class);
