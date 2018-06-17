@@ -27,7 +27,7 @@ public abstract class GeneralNewsAdapter extends RecyclerView.Adapter<GeneralNew
     private List<New> newList; // Cached copy of words
     private Context context;
     private Repository repository;
-    ;
+
 
     public GeneralNewsAdapter(Context context) {
         this.context = context;
@@ -63,9 +63,9 @@ public abstract class GeneralNewsAdapter extends RecyclerView.Adapter<GeneralNew
                         .apply(RequestOptions.centerCropTransform()).into(holder.newspic);
             }
             if (newList.get(position).isFavorite()) {
-                holder.newsfavoritemarker.setImageResource(R.drawable.staron);
+                holder.newsfavoritemarker.setImageResource(android.R.drawable.star_big_on);
             } else {
-                holder.newsfavoritemarker.setImageResource(R.drawable.staroff);
+                holder.newsfavoritemarker.setImageResource(android.R.drawable.star_big_off);
             }
 
 

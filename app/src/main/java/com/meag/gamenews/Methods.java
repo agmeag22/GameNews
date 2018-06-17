@@ -13,8 +13,4 @@ public class Methods {
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
-
-    public void SetupSearch() {
-
-    }
 }
