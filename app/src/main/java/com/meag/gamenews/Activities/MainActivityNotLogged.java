@@ -36,7 +36,7 @@ public class MainActivityNotLogged extends AppCompatActivity {
         }
         sp = getSharedPreferences(getPackageName(), MODE_PRIVATE);
         String token = sp.getString("token", "");
-        //Validating the token to change activities or fragmenss
+        //Validating the token to change activities or fragments
         if (token.equals("")) {
             logged = 0;
         } else {
@@ -74,18 +74,5 @@ public class MainActivityNotLogged extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.GRAY));
         dialog.show();
     }
-
-
-//        new AlertDialog.Builder(this)
-//                .setTitle(R.string.question)
-//                .setMessage(R.string.exit_question)
-//                .setNegativeButton(android.R.string.no, null)
-//                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-//
-//                    public void onClick(DialogInterface arg0, int arg1) {
-//                        MainActivityNotLogged.super.onBackPressed();
-//                    }
-//                }).create().show();
-
 
 }

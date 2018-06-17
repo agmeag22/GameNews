@@ -84,8 +84,6 @@ public abstract class GeneralNewsAdapter extends RecyclerView.Adapter<GeneralNew
 
                 }
             });
-//            if(newList.get(position).getTitle() != null&&newList.get(position).getDescription() != null
-//                    &&newList.get(position).getCoverImage() != null&&newList.get(position).getBody()!=null) {
             holder.cardviewcontainer.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -133,9 +131,6 @@ public abstract class GeneralNewsAdapter extends RecyclerView.Adapter<GeneralNew
         }
     }
 
-    private void SetupSearch() {
-
-    }
 
     @Override
     public int getItemViewType(int position) {

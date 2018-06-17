@@ -99,7 +99,6 @@ public class Login extends Fragment {
                 if (username.getText() != null && password.getText() != null) {
                     login = new doInBackground();
                     login.execute();
-//                    logIn(username.getText().toString(), password.getText().toString());
                 }
 
 

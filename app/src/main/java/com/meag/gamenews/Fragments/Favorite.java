@@ -86,7 +86,6 @@ public class Favorite extends Fragment implements SwipeRefreshLayout.OnRefreshLi
             public void setFavoriteOn(String newid) {
                 String token = sp.getString("token", "");
                 String userid = sp.getString("userid", "");
-//                viewModel.PopulateUserInfo("Bearer " + token, sp);
                 viewModel.Setfavorite("Bearer " + token, userid, newid);
             }
 
